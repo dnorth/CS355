@@ -1,15 +1,19 @@
 package cs355;
 import java.awt.Color;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
+import java.awt.event.MouseMotionListener;
 import java.awt.image.BufferedImage;
 import java.util.Iterator;
 
 import cs355.CS355Controller;
 
-public class MainController implements CS355Controller{
+public class MainController implements CS355Controller, MouseListener, MouseMotionListener{
 
 	private Model model;
 	private Color color;
 	private Shape shape;
+	private DrawingHandler drawingHandler;
 	
 	public MainController(Model model) {
 		this.model = model;
@@ -54,6 +58,7 @@ public class MainController implements CS355Controller{
 	@Override
 	public void lineButtonHit() {
 		this.shape = new Line(this.color);
+		this.drawingHandler = new LineHandler(this);
 	}
 
 	@Override
@@ -145,5 +150,56 @@ public class MainController implements CS355Controller{
 		// TODO Auto-generated method stub
 		
 	}
+
+	public Model getModel() {
+		return model;
+	}
+
+	public void setModel(Model model) {
+		this.model = model;
+	}
+
+	public Color getColor() {
+		return color;
+	}
+
+	public void setColor(Color color) {
+		this.color = color;
+	}
+
+	public Shape getShape() {
+		return shape;
+	}
+
+	public void setShape(Shape shape) {
+		this.shape = shape;
+	}
+
+	@Override
+	public void mouseDragged(MouseEvent e) {
+		drawingHandler.drag(e.getPoint());
+	}
+
+	@Override
+	public void mouseMoved(MouseEvent e) {}
+
+	@Override
+	public void mouseClicked(MouseEvent e) {}
+
+	@Override
+	public void mousePressed(MouseEvent e) {
+		drawingHandler.start(e.getPoint());
+	}
+
+	@Override
+	public void mouseReleased(MouseEvent e) {
+		drawingHandler.end();		
+	}
+
+	@Override
+	public void mouseEntered(MouseEvent e) {}
+
+	@Override
+	public void mouseExited(MouseEvent e) {}
 
 }

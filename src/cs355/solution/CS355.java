@@ -32,7 +32,7 @@ public class CS355
     	MainController controller = new MainController(model);
     	MainView view = new MainView(model);
     	MouseController mouse = new MouseController();
-        GUIFunctions.createCS355Frame(controller,view,mouse,mouse);
+        GUIFunctions.createCS355Frame(controller,view,controller,controller);
         
         GUIFunctions.refresh();        
     }
