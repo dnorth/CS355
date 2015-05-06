@@ -7,6 +7,7 @@ package cs355;
 import static cs355.CS355SScrollbarAttrConsts.H_SCROLL_BAR;
 import static cs355.CS355SScrollbarAttrConsts.KNOB;
 import static cs355.CS355SScrollbarAttrConsts.MIN;
+
 import java.awt.Color;
 import java.awt.Graphics2D;
 import java.awt.event.KeyEvent;
@@ -20,9 +21,12 @@ import java.util.TreeSet;
 import java.util.concurrent.Semaphore;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+
 import javax.swing.JColorChooser;
 import javax.swing.JOptionPane;
 import javax.swing.JScrollBar;
+
+import cs355.controller.CS355Controller;
 
 /**
  *

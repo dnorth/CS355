@@ -1,7 +1,9 @@
-package cs355;
+package cs355.model;
 
 import java.util.ArrayList;
 import java.util.Observable;
+
+import cs355.model.shape.Shape;
 
 public class Model extends Observable {
 	private Shape activeShape;

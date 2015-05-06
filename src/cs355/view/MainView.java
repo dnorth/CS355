@@ -1,8 +1,13 @@
-package cs355;
+package cs355.view;
 
 import java.awt.Graphics2D;
 import java.util.Observable;
 import java.util.Observer;
+
+import cs355.GUIFunctions;
+import cs355.ViewRefresher;
+import cs355.model.Model;
+import cs355.model.shape.Shape;
 
 public class MainView implements ViewRefresher, Observer{
 

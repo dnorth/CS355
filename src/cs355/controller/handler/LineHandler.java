@@ -1,6 +1,9 @@
-package cs355;
+package cs355.controller.handler;
 
 import java.awt.Point;
+
+import cs355.controller.MainController;
+import cs355.model.shape.Line;
 
 public class LineHandler implements DrawingHandler {
 

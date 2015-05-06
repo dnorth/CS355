@@ -1,4 +1,4 @@
-package cs355;
+package cs355.controller;
 import java.awt.Color;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
@@ -6,7 +6,17 @@ import java.awt.event.MouseMotionListener;
 import java.awt.image.BufferedImage;
 import java.util.Iterator;
 
-import cs355.CS355Controller;
+import cs355.GUIFunctions;
+import cs355.controller.CS355Controller;
+import cs355.controller.handler.CircleHandler;
+import cs355.controller.handler.DrawingHandler;
+import cs355.controller.handler.EllipseHandler;
+import cs355.controller.handler.LineHandler;
+import cs355.controller.handler.NullDrawHandler;
+import cs355.controller.handler.RectangleHandler;
+import cs355.controller.handler.SquareHandler;
+import cs355.controller.handler.TriangleHandler;
+import cs355.model.Model;
 
 public class MainController implements CS355Controller, MouseListener, MouseMotionListener{
 
@@ -28,8 +38,8 @@ public class MainController implements CS355Controller, MouseListener, MouseMoti
 
 	@Override
 	public void triangleButtonHit() {
-		// TODO Auto-generated method stub
-		
+		System.out.println("Clicked new Triangle!");
+		this.drawingHandler = new TriangleHandler(this);
 	}
 
 	@Override
@@ -44,14 +54,12 @@ public class MainController implements CS355Controller, MouseListener, MouseMoti
 
 	@Override
 	public void circleButtonHit() {
-		// TODO Auto-generated method stub
-		
+		this.drawingHandler = new CircleHandler(this);
 	}
 
 	@Override
 	public void ellipseButtonHit() {
-		// TODO Auto-generated method stub
-		
+		this.drawingHandler = new EllipseHandler(this);
 	}
 
 	@Override

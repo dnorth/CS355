@@ -1,4 +1,4 @@
-package cs355;
+package cs355.controller.handler;
 
 import java.awt.Point;
 

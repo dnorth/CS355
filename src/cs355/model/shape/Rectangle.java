@@ -1,17 +1,15 @@
-package cs355;
+package cs355.model.shape;
 
 import java.awt.Color;
 import java.awt.Point;
 
-public class Circle extends Shape{
-	
+public class Rectangle extends Shape{
 
 	private Point startPoint;
-	private double radius;
+	private int height;
 	private int width;
 	
-	
-	public Circle(Color color) {
+	public Rectangle(Color color) {
 		super(color);
 	}
 	public Point getStartPoint() {
@@ -20,7 +18,12 @@ public class Circle extends Shape{
 	public void setStartPoint(Point startPoint) {
 		this.startPoint = startPoint;
 	}
-
+	public int getHeight() {
+		return height;
+	}
+	public void setHeight(int height) {
+		this.height = height;
+	}
 	public int getWidth() {
 		return width;
 	}

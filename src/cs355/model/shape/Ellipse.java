@@ -1,22 +1,22 @@
-package cs355;
+package cs355.model.shape;
 
 import java.awt.Color;
 import java.awt.Point;
 
-public class Rectangle extends Shape{
-
-	private Point startPoint;
+public class Ellipse extends Shape{
+	
+	private Point center;
 	private int height;
 	private int width;
 	
-	public Rectangle(Color color) {
+	public Ellipse(Color color) {
 		super(color);
 	}
-	public Point getStartPoint() {
-		return startPoint;
+	public Point getCenter() {
+		return center;
 	}
-	public void setStartPoint(Point startPoint) {
-		this.startPoint = startPoint;
+	public void setCenter(Point center) {
+		this.center = center;
 	}
 	public int getHeight() {
 		return height;
@@ -30,5 +30,4 @@ public class Rectangle extends Shape{
 	public void setWidth(int width) {
 		this.width = width;
 	}
-	
 }

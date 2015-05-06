@@ -2,7 +2,7 @@
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
-package cs355;
+package cs355.controller;
 
 import java.awt.Color;
 import java.awt.image.BufferedImage;

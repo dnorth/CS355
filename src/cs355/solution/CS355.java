@@ -5,10 +5,9 @@
 package cs355.solution;
 
 import cs355.GUIFunctions;
-import cs355.MainController;
-import cs355.MainView;
-import cs355.Model;
-import cs355.MouseController;
+import cs355.controller.MainController;
+import cs355.model.Model;
+import cs355.view.MainView;
 
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -31,7 +30,6 @@ public class CS355
     	Model model = new Model();
     	MainController controller = new MainController(model);
     	MainView view = new MainView(model);
-    	MouseController mouse = new MouseController();
         GUIFunctions.createCS355Frame(controller,view,controller,controller);
         
         GUIFunctions.refresh();        

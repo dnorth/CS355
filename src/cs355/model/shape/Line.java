@@ -1,29 +1,27 @@
-package cs355;
+package cs355.model.shape;
 
 import java.awt.Color;
 import java.awt.Point;
 
-public class Square extends Shape{
-
+public class Line extends Shape{
 	private Point startPoint;
-	private int size;	
+	private Point endPoint;
 	
-	public Square(Color color) {
+	public Line(Color color){
 		super(color);
 	}
+	
 	public Point getStartPoint() {
 		return startPoint;
 	}
 	public void setStartPoint(Point startPoint) {
 		this.startPoint = startPoint;
 	}
-	public int getSize() {
-		return size;
+	public Point getEndPoint() {
+		return endPoint;
 	}
-	public void setSize(int size) {
-		this.size = size;
+	public void setEndPoint(Point endPoint) {
+		this.endPoint = endPoint;
 	}
-
-	
 	
 }

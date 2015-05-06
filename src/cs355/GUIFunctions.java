@@ -8,6 +8,8 @@ import java.awt.Color;
 import java.awt.event.MouseListener;
 import java.awt.event.MouseMotionListener;
 
+import cs355.controller.CS355Controller;
+
 /**
  *
  * @author Talonos

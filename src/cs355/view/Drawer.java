@@ -1,7 +1,14 @@
-package cs355;
+package cs355.view;
 
-import java.awt.Color;
 import java.awt.Graphics2D;
+
+import cs355.model.shape.Circle;
+import cs355.model.shape.Ellipse;
+import cs355.model.shape.Line;
+import cs355.model.shape.Rectangle;
+import cs355.model.shape.Shape;
+import cs355.model.shape.Square;
+import cs355.model.shape.Triangle;
 
 public class Drawer {
 	private Graphics2D g2D;
@@ -27,14 +34,23 @@ public class Drawer {
 	}
 	
 	public void draw(Circle circle) {
-		g2D.fillOval(circle.getStartPoint().x, circle.getStartPoint().y, circle.getWidth(), circle.getWidth());
+		g2D.fillOval(circle.getCenter().x - circle.getRadius(), circle.getCenter().y - circle.getRadius(), circle.getRadius()*2, circle.getRadius()*2);
+	}
+	
+	public void draw(Ellipse ellipse) {
+		g2D.fillOval(ellipse.getCenter().x - ellipse.getWidth()/2, ellipse.getCenter().y - ellipse.getHeight()/2, ellipse.getWidth(), ellipse.getHeight());
+	}
+	
+	public void draw(Triangle triangle) {
+		int[] xCoords = new int[] {triangle.getPoint1().x, triangle.getPoint2().x, triangle.getPoint3().x};
+		int[] yCoords = new int[] {triangle.getPoint1().y, triangle.getPoint2().y, triangle.getPoint3().y};
+		g2D.fillPolygon(xCoords, yCoords, 3);
 	}
 	
 	public void draw(Shape shape) {
 		if (shape != null)
 		{
 			g2D.setColor(shape.getColor());	
-		
 			if(shape instanceof Line) {
 				draw((Line) shape);
 			} else if (shape instanceof Square){
@@ -43,6 +59,10 @@ public class Drawer {
 				draw((Rectangle) shape);
 			} else if (shape instanceof Circle) {
 				draw((Circle) shape);
+			} else if (shape instanceof Ellipse) {
+				draw((Ellipse) shape);
+			} else if (shape instanceof Triangle) {
+				draw((Triangle) shape);
 			}
 		}
 	}
