@@ -17,13 +17,13 @@ public class MainView implements ViewRefresher, Observer{
 	@Override
 	public void refreshView(Graphics2D g2d) {
 		drawer.setG2D(g2d);
-		
-		drawer.draw(model.getActiveShape());
-		
+				
 		for (Shape shape : model.getShapes())
 		{
 			drawer.draw(shape);
 		}
+		
+		drawer.draw(model.getActiveShape());
 	}
 
 	@Override

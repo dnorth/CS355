@@ -34,14 +34,12 @@ public class MainController implements CS355Controller, MouseListener, MouseMoti
 
 	@Override
 	public void squareButtonHit() {
-		System.out.println("Hello!");
-		
+		this.drawingHandler = new SquareHandler(this);
 	}
 
 	@Override
 	public void rectangleButtonHit() {
-		// TODO Auto-generated method stub
-		
+		this.drawingHandler = new RectangleHandler(this);
 	}
 
 	@Override
