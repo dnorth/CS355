@@ -12,17 +12,18 @@ public class MainController implements CS355Controller, MouseListener, MouseMoti
 
 	private Model model;
 	private Color color;
-	private Shape shape;
 	private DrawingHandler drawingHandler;
 	
 	public MainController(Model model) {
 		this.model = model;
+		this.color = Color.WHITE;
+		this.drawingHandler = new NullDrawHandler();
 	}
 
 	@Override
 	public void colorButtonHit(Color c) {
 		this.color = c;
-		System.out.println("New Color! " + c);
+		GUIFunctions.changeSelectedColor(c);
 	}
 
 	@Override
@@ -57,7 +58,6 @@ public class MainController implements CS355Controller, MouseListener, MouseMoti
 
 	@Override
 	public void lineButtonHit() {
-		this.shape = new Line(this.color);
 		this.drawingHandler = new LineHandler(this);
 	}
 
@@ -165,14 +165,6 @@ public class MainController implements CS355Controller, MouseListener, MouseMoti
 
 	public void setColor(Color color) {
 		this.color = color;
-	}
-
-	public Shape getShape() {
-		return shape;
-	}
-
-	public void setShape(Shape shape) {
-		this.shape = shape;
 	}
 
 	@Override
