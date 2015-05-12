@@ -1,6 +1,7 @@
 package cs355.controller.handler;
 
 import java.awt.Point;
+import java.awt.geom.Point2D;
 
 import cs355.controller.MainController;
 import cs355.model.shape.Circle;
@@ -26,20 +27,20 @@ public class CircleHandler implements DrawingHandler {
 	public void drag(Point end) {
 		circle.setRadius(Math.min(Math.abs((end.y - corner.y)), Math.abs((end.x - corner.x)))/2);
 	
-		int x, y;
+		double x, y;
 		if(end.x < corner.x) {
-			x = corner.x - circle.getRadius()*2;
+			x = corner.x - circle.getRadius();
 		} else {
-			x = corner.x;
+			x = corner.x + circle.getRadius();
 		}
 		
 		if(end.y < corner.y) {
-			y = corner.y - circle.getRadius()*2;
+			y = corner.y - circle.getRadius();
 		} else {
-			y= corner.y;
+			y= corner.y + circle.getRadius();
 		}
 		
-		circle.setCenter(new Point(x + circle.getRadius(), y + circle.getRadius()));
+		circle.setCenter(new Point2D.Double(x, y));
 		controller.getModel().setActiveShape(circle);
 	}
 

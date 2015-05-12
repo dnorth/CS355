@@ -1,6 +1,7 @@
 package cs355.controller.handler;
 
 import java.awt.Point;
+import java.awt.geom.Point2D;
 
 import cs355.controller.MainController;
 import cs355.model.shape.Square;
@@ -26,20 +27,20 @@ public class SquareHandler implements DrawingHandler {
 	public void drag(Point end) {
 		square.setSize(Math.min(Math.abs(end.y - corner.y), Math.abs(end.x - corner.x)));
 		
-		int x, y;
+		double x, y;
 		if(end.x < corner.x) {
-			x = corner.x - square.getSize();
+			x = corner.x - square.getSize()/2;
 		} else {
-			x = corner.x;
+			x = corner.x + square.getSize()/2;
 		}
 		
 		if(end.y < corner.y) {
-			y = corner.y - square.getSize();
+			y = corner.y - square.getSize()/2;
 		} else {
-			y= corner.y;
+			y= corner.y + square.getSize()/2;
 		}
 		
-		square.setStartPoint(new Point(x, y));
+		square.setCenter(new Point2D.Double(x, y));
 		controller.getModel().setActiveShape(square);
 	}
 

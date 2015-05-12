@@ -5,29 +5,24 @@ import java.awt.Point;
 
 public class Rectangle extends Shape{
 
-	private Point startPoint;
-	private int height;
-	private int width;
+	//private Point startPoint;
+	private double height;
+	private double width;
 	
 	public Rectangle(Color color) {
 		super(color);
 	}
-	public Point getStartPoint() {
-		return startPoint;
-	}
-	public void setStartPoint(Point startPoint) {
-		this.startPoint = startPoint;
-	}
-	public int getHeight() {
+
+	public double getHeight() {
 		return height;
 	}
-	public void setHeight(int height) {
+	public void setHeight(double height) {
 		this.height = height;
 	}
-	public int getWidth() {
+	public double getWidth() {
 		return width;
 	}
-	public void setWidth(int width) {
+	public void setWidth(double width) {
 		this.width = width;
 	}
 	

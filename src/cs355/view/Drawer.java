@@ -1,6 +1,8 @@
 package cs355.view;
 
 import java.awt.Graphics2D;
+import java.awt.geom.AffineTransform;
+import java.awt.geom.Point2D;
 
 import cs355.model.shape.Circle;
 import cs355.model.shape.Ellipse;
@@ -26,31 +28,37 @@ public class Drawer {
 	}
 	
 	public void draw(Square square) {
-		g2D.fillRect(square.getStartPoint().x, square.getStartPoint().y, square.getSize(), square.getSize());
+		g2D.fillRect(-square.getSize()/2, -square.getSize()/2, square.getSize(), square.getSize());
 	}
 	
 	public void draw(Rectangle rectangle) {
-		g2D.fillRect(rectangle.getStartPoint().x, rectangle.getStartPoint().y, rectangle.getWidth(), rectangle.getHeight());
+		g2D.fillRect((int)(-rectangle.getWidth()/2), (int)(-rectangle.getHeight()/2), (int)rectangle.getWidth(), (int)rectangle.getHeight());
 	}
 	
 	public void draw(Circle circle) {
-		g2D.fillOval(circle.getCenter().x - circle.getRadius(), circle.getCenter().y - circle.getRadius(), circle.getRadius()*2, circle.getRadius()*2);
+		g2D.fillOval(-circle.getRadius(), -circle.getRadius(), circle.getRadius() * 2, circle.getRadius() * 2);
 	}
 	
 	public void draw(Ellipse ellipse) {
-		g2D.fillOval(ellipse.getCenter().x - ellipse.getWidth()/2, ellipse.getCenter().y - ellipse.getHeight()/2, ellipse.getWidth(), ellipse.getHeight());
+		g2D.fillOval(-ellipse.getWidth()/2, -ellipse.getHeight()/2, ellipse.getWidth(), ellipse.getHeight());
 	}
 	
 	public void draw(Triangle triangle) {
-		int[] xCoords = new int[] {triangle.getPoint1().x, triangle.getPoint2().x, triangle.getPoint3().x};
-		int[] yCoords = new int[] {triangle.getPoint1().y, triangle.getPoint2().y, triangle.getPoint3().y};
+		int[] xCoords = new int[] {(int)triangle.getPoint1().getX(), (int)triangle.getPoint2().getX(), (int)triangle.getPoint3().getX()};
+		int[] yCoords = new int[] {(int)triangle.getPoint1().getY(), (int)triangle.getPoint2().getY(), (int)triangle.getPoint3().getY()};
 		g2D.fillPolygon(xCoords, yCoords, 3);
 	}
 	
 	public void draw(Shape shape) {
 		if (shape != null)
-		{
+		{			
+			AffineTransform objToWorld = new AffineTransform();
+			objToWorld.translate(shape.getCenter().getX(), shape.getCenter().getY());
+			objToWorld.rotate(shape.getRotateAngle());
 			g2D.setColor(shape.getColor());	
+			
+			g2D.setTransform(objToWorld);
+			
 			if(shape instanceof Line) {
 				draw((Line) shape);
 			} else if (shape instanceof Square){

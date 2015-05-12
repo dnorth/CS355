@@ -1,6 +1,7 @@
 package cs355.controller.handler;
 
 import java.awt.Point;
+import java.awt.geom.Point2D;
 
 import cs355.controller.MainController;
 import cs355.model.shape.Rectangle;
@@ -24,26 +25,12 @@ public class RectangleHandler implements DrawingHandler {
 
 	@Override
 	public void drag(Point end) {
-
-
+		double x = (corner.getX() + end.getX()) / 2;
+		double y = (corner.getY() + end.getY()) / 2;
+		
+		rectangle.setCenter(new Point2D.Double(x, y));
 		rectangle.setWidth(Math.abs(end.x - corner.x));
 		rectangle.setHeight(Math.abs(end.y - corner.y));
-		
-		int x, y;
-		
-		if(end.x < corner.x) {
-			x = end.x;
-		} else {
-			x = corner.x;
-		}
-		
-		if(end.y < corner.y) {
-			y = end.y;
-		} else {
-			y= corner.y;
-		}
-		
-		rectangle.setStartPoint(new Point(x, y));
 		controller.getModel().setActiveShape(rectangle);
 	}
 

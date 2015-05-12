@@ -5,19 +5,10 @@ import java.awt.Point;
 
 public class Circle extends Shape{
 	
-	private Point center;
 	private int radius;	
 	
 	public Circle(Color color) {
 		super(color);
-	}
-
-	public Point getCenter() {
-		return center;
-	}
-
-	public void setCenter(Point center) {
-		this.center = center;
 	}
 
 	public int getRadius() {

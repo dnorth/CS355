@@ -1,6 +1,7 @@
 package cs355.controller.handler;
 
 import java.awt.Point;
+import java.awt.geom.Point2D;
 
 import cs355.controller.MainController;
 import cs355.model.shape.Ellipse;
@@ -30,18 +31,18 @@ public class EllipseHandler implements DrawingHandler {
 		int x, y;
 		
 		if(end.x < corner.x) {
-			x = end.x;
+			x = corner.x - ellipse.getWidth()/2;
 		} else {
-			x = corner.x;
+			x = corner.x + ellipse.getWidth()/2;
 		}
 		
 		if(end.y < corner.y) {
-			y = end.y;
+			y = corner.y - ellipse.getHeight()/2;
 		} else {
-			y= corner.y;
+			y= corner.y + ellipse.getHeight()/2;
 		}
 		
-		ellipse.setCenter(new Point(x + ellipse.getWidth()/2, y + ellipse.getHeight()/2));
+		ellipse.setCenter(new Point2D.Double(x, y));
 		controller.getModel().setActiveShape(ellipse);
 	}
 
