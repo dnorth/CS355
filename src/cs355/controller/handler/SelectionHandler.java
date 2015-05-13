@@ -24,6 +24,8 @@ public class SelectionHandler implements DrawingHandler{
 	@Override
 	public void drag(Point end) {
 		this.point = end;
+		controller.getModel().getSelectedShape();
+		
 	}
 
 	@Override

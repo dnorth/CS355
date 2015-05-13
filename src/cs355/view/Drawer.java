@@ -1,5 +1,6 @@
 package cs355.view;
 
+import java.awt.BasicStroke;
 import java.awt.Color;
 import java.awt.Graphics2D;
 import java.awt.geom.AffineTransform;
@@ -16,6 +17,7 @@ import cs355.model.shape.Triangle;
 public class Drawer {
 	private Graphics2D g2D;
 	private Shape currentShape;
+	private int THICKNESS = 3;
 	
 	public Graphics2D getG2D() {
 		return g2D;
@@ -35,25 +37,56 @@ public class Drawer {
 	}
 	
 	public void draw(Square square) {
+		
 		g2D.fillRect((int)(-square.getSize()/2), (int)(-square.getSize()/2), (int)(square.getSize()) , (int)(square.getSize()));
+		
+		if(square.isSelected()) {
+			g2D.setColor(Color.BLUE);
+			g2D.setStroke(new BasicStroke(THICKNESS));
+			g2D.drawRect((int)(-square.getSize()/2), (int)(-square.getSize()/2), (int)(square.getSize()), (int)(square.getSize()));
+		}
 	}
 	
 	public void draw(Rectangle rectangle) {
 		g2D.fillRect((int)(-rectangle.getWidth()/2), (int)(-rectangle.getHeight()/2), (int)rectangle.getWidth(), (int)rectangle.getHeight());
+		
+		if(rectangle.isSelected()) {
+			g2D.setColor(Color.BLUE);
+			g2D.setStroke(new BasicStroke(THICKNESS));
+			g2D.drawRect((int)(-rectangle.getWidth()/2), (int)(-rectangle.getHeight()/2), (int)rectangle.getWidth(), (int)rectangle.getHeight());
+		}
 	}
 	
 	public void draw(Circle circle) {
 		g2D.fillOval((int)-circle.getRadius(), (int)-circle.getRadius(), (int)circle.getRadius() * 2, (int)circle.getRadius() * 2);
+	
+		if(circle.isSelected()) {
+			g2D.setColor(Color.BLUE);
+			g2D.setStroke(new BasicStroke(THICKNESS));
+			g2D.drawOval((int)-circle.getRadius(), (int)-circle.getRadius(), (int)circle.getRadius() * 2, (int)circle.getRadius() * 2);
+		}
 	}
 	
 	public void draw(Ellipse ellipse) {
 		g2D.fillOval((int)-ellipse.getWidth()/2, (int)-ellipse.getHeight()/2, (int)ellipse.getWidth(), (int)ellipse.getHeight());
+		
+		if(ellipse.isSelected()) {
+			g2D.setColor(Color.BLUE);
+			g2D.setStroke(new BasicStroke(THICKNESS));
+			g2D.drawOval((int)(-ellipse.getWidth()/2 - 1), (int)(-ellipse.getHeight()/2 - 1), (int) (ellipse.getWidth() + 1), (int)(ellipse.getHeight() + 1));
+		}
 	}
 	
 	public void draw(Triangle triangle) {
 		int[] xCoords = new int[] {(int)triangle.getPoint1().getX(), (int)triangle.getPoint2().getX(), (int)triangle.getPoint3().getX()};
 		int[] yCoords = new int[] {(int)triangle.getPoint1().getY(), (int)triangle.getPoint2().getY(), (int)triangle.getPoint3().getY()};
 		g2D.fillPolygon(xCoords, yCoords, 3);
+		
+		if(triangle.isSelected()) {
+			g2D.setColor(Color.BLUE);
+			g2D.setStroke(new BasicStroke(THICKNESS));
+			g2D.drawPolygon(xCoords, yCoords, 3);
+		}
 	}
 	
 	public void draw(Shape shape) {

@@ -39,5 +39,24 @@ public class Triangle extends Shape{
 		this.point3 = point3;
 	}
 	
+	@Override
+	public boolean within(Point2D point, double tolerance) {
+		double firstSign = (point.getX() - point1.getX()) * (point2.getX() - point1.getX());
+		System.out.println("\n ------------------------------------ /n");
+		return (
+				sameSign(firstSign, (point.getY() - point1.getY()) * (point2.getY() - point1.getY())) && 
+				sameSign(firstSign, (point.getX() - point2.getX()) * (point3.getX() - point2.getX())) && 
+				sameSign(firstSign, (point.getY() - point2.getY()) * (point3.getY() - point2.getY())) && 
+				sameSign(firstSign, (point.getX() - point3.getX()) * (point1.getX() - point3.getX())) && 
+				sameSign(firstSign, (point.getY() - point3.getY()) * (point1.getY() - point3.getY()))
+		);
+	}
+	
+	public boolean sameSign(double a, double b)
+	{
+		boolean trying = a*b >= 0;
+		System.out.println("Comparing a: " + a + " and b: " + b + " ----> " +  trying);
+		return trying;
+	}
 	
 }
