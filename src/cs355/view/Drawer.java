@@ -1,5 +1,6 @@
 package cs355.view;
 
+import java.awt.Color;
 import java.awt.Graphics2D;
 import java.awt.geom.AffineTransform;
 import java.awt.geom.Point2D;
@@ -14,6 +15,7 @@ import cs355.model.shape.Triangle;
 
 public class Drawer {
 	private Graphics2D g2D;
+	private Shape currentShape;
 	
 	public Graphics2D getG2D() {
 		return g2D;
@@ -24,11 +26,16 @@ public class Drawer {
 	}
 
 	public void draw(Line line) {
+		if(line.isSelected())
+		{
+			drawHandle(line.getStartPoint());
+			drawHandle(line.getEndPoint());
+		}
 		g2D.drawLine(line.getStartPoint().x , line.getStartPoint().y, line.getEndPoint().x, line.getEndPoint().y);
 	}
 	
 	public void draw(Square square) {
-		g2D.fillRect(-square.getSize()/2, -square.getSize()/2, square.getSize(), square.getSize());
+		g2D.fillRect((int)(-square.getSize()/2), (int)(-square.getSize()/2), (int)(square.getSize()) , (int)(square.getSize()));
 	}
 	
 	public void draw(Rectangle rectangle) {
@@ -36,11 +43,11 @@ public class Drawer {
 	}
 	
 	public void draw(Circle circle) {
-		g2D.fillOval(-circle.getRadius(), -circle.getRadius(), circle.getRadius() * 2, circle.getRadius() * 2);
+		g2D.fillOval((int)-circle.getRadius(), (int)-circle.getRadius(), (int)circle.getRadius() * 2, (int)circle.getRadius() * 2);
 	}
 	
 	public void draw(Ellipse ellipse) {
-		g2D.fillOval(-ellipse.getWidth()/2, -ellipse.getHeight()/2, ellipse.getWidth(), ellipse.getHeight());
+		g2D.fillOval((int)-ellipse.getWidth()/2, (int)-ellipse.getHeight()/2, (int)ellipse.getWidth(), (int)ellipse.getHeight());
 	}
 	
 	public void draw(Triangle triangle) {
@@ -51,9 +58,11 @@ public class Drawer {
 	
 	public void draw(Shape shape) {
 		if (shape != null)
-		{			
+		{
+			currentShape = shape;
 			AffineTransform objToWorld = new AffineTransform();
-			objToWorld.translate(shape.getCenter().getX(), shape.getCenter().getY());
+			//Add .5 to round and make sure the double isn't converted weirdly
+			objToWorld.translate(shape.getCenter().getX() + .5, shape.getCenter().getY() + .5);
 			objToWorld.rotate(shape.getRotateAngle());
 			g2D.setColor(shape.getColor());	
 			
@@ -73,5 +82,12 @@ public class Drawer {
 				draw((Triangle) shape);
 			}
 		}
+	}
+	
+	public void drawHandle(Point2D point)
+	{
+		g2D.setColor(Color.ORANGE);
+		g2D.drawRect((int)point.getX() - 3, (int)point.getY() - 3, 7, 7);
+		g2D.setColor(currentShape.getColor());
 	}
 }

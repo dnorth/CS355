@@ -8,11 +8,13 @@ public abstract class Shape {
 	private Color color;
 	private Point2D center; 
 	private double rotateAngle;
+	private boolean selected;
 
 	public Shape() {
 		this.color = Color.WHITE;
 		this.center = new Point2D.Double();
 		this.rotateAngle = 0;
+		this.selected = false;
 	}
 	
 	public Shape(Color color) {
@@ -44,5 +46,15 @@ public abstract class Shape {
 	public void setRotateAngle(double rotateAngle) {
 		this.rotateAngle = rotateAngle;
 	}
+	
+	public boolean isSelected() {
+		return selected;
+	}
+
+	public void setSelected(boolean selected) {
+		this.selected = selected;
+	}
+
+	public boolean within(Point2D point, double tolerance) { return false; };
 	
 }

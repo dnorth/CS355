@@ -4,16 +4,16 @@ import java.awt.Color;
 
 public class Square extends Shape{
 
-	private int size;	
+	private double size;	
 	
 	public Square(Color color) {
 		super(color);
 	}
 
-	public int getSize() {
+	public double getSize() {
 		return size;
 	}
-	public void setSize(int size) {
+	public void setSize(double size) {
 		this.size = size;
 	}
 

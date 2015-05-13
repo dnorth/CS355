@@ -14,6 +14,7 @@ import cs355.controller.handler.EllipseHandler;
 import cs355.controller.handler.LineHandler;
 import cs355.controller.handler.NullDrawHandler;
 import cs355.controller.handler.RectangleHandler;
+import cs355.controller.handler.SelectionHandler;
 import cs355.controller.handler.SquareHandler;
 import cs355.controller.handler.TriangleHandler;
 import cs355.model.Model;
@@ -32,45 +33,56 @@ public class MainController implements CS355Controller, MouseListener, MouseMoti
 
 	@Override
 	public void colorButtonHit(Color c) {
-		this.color = c;
-		GUIFunctions.changeSelectedColor(c);
+		if(drawingHandler instanceof SelectionHandler)
+		{
+			((SelectionHandler) drawingHandler).changeColor(c);
+		}
+		else
+		{
+			this.color = c;
+			GUIFunctions.changeSelectedColor(c);
+		}
 	}
 
 	@Override
 	public void triangleButtonHit() {
-		System.out.println("Clicked new Triangle!");
+		model.deselectAll();
 		this.drawingHandler = new TriangleHandler(this);
 	}
 
 	@Override
 	public void squareButtonHit() {
+		model.deselectAll();
 		this.drawingHandler = new SquareHandler(this);
 	}
 
 	@Override
 	public void rectangleButtonHit() {
+		model.deselectAll();
 		this.drawingHandler = new RectangleHandler(this);
 	}
 
 	@Override
 	public void circleButtonHit() {
+		model.deselectAll();
 		this.drawingHandler = new CircleHandler(this);
 	}
 
 	@Override
 	public void ellipseButtonHit() {
+		model.deselectAll();
 		this.drawingHandler = new EllipseHandler(this);
 	}
 
 	@Override
 	public void lineButtonHit() {
+		model.deselectAll();
 		this.drawingHandler = new LineHandler(this);
 	}
 
 	@Override
 	public void selectButtonHit() {
-		// TODO Auto-generated method stub
-		
+		this.drawingHandler = new SelectionHandler(this);
 	}
 
 	@Override

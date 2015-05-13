@@ -28,7 +28,7 @@ public class EllipseHandler implements DrawingHandler {
 		ellipse.setWidth(Math.abs(end.x - corner.x));
 		ellipse.setHeight(Math.abs(end.y - corner.y));
 		
-		int x, y;
+		double x, y;
 		
 		if(end.x < corner.x) {
 			x = corner.x - ellipse.getWidth()/2;
