@@ -57,4 +57,5 @@ public abstract class Shape {
 
 	public boolean within(Point2D point, double tolerance) { return false; };
 	
+	public boolean withinRotator(Point2D p) { return false; };
 }

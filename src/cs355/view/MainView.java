@@ -29,6 +29,7 @@ public class MainView implements ViewRefresher, Observer{
 		}
 		
 		drawer.draw(model.getActiveShape());
+		drawer.drawOutline(model.getSelectedShape());
 	}
 
 	@Override

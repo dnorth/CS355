@@ -2,6 +2,7 @@ package cs355.model.shape;
 
 import java.awt.Color;
 import java.awt.geom.Point2D;
+import java.util.Vector;
 
 public class Triangle extends Shape{
 	private Point2D point1;
@@ -41,22 +42,28 @@ public class Triangle extends Shape{
 	
 	@Override
 	public boolean within(Point2D point, double tolerance) {
-		double firstSign = (point.getX() - point1.getX()) * (point2.getX() - point1.getX());
-		System.out.println("\n ------------------------------------ /n");
-		return (
-				sameSign(firstSign, (point.getY() - point1.getY()) * (point2.getY() - point1.getY())) && 
-				sameSign(firstSign, (point.getX() - point2.getX()) * (point3.getX() - point2.getX())) && 
-				sameSign(firstSign, (point.getY() - point2.getY()) * (point3.getY() - point2.getY())) && 
-				sameSign(firstSign, (point.getX() - point3.getX()) * (point1.getX() - point3.getX())) && 
-				sameSign(firstSign, (point.getY() - point3.getY()) * (point1.getY() - point3.getY()))
-		);
+		boolean b1, b2, b3;
+				
+		b1 = sign(point, point1, point2) < 0;
+		b2 = sign(point, point2, point3) < 0;
+		b3 = sign(point, point3, point1) < 0;
+		return ((b1 == b2) && (b2 == b3));
+	}
+		
+	
+	public double sign(Point2D point1, Point2D point2, Point2D point3)
+	{
+	    return (point1.getX() - point3.getX()) * (point2.getY() - point3.getY()) - (point2.getX() - point3.getX()) * (point1.getY() - point3.getY());
+
 	}
 	
-	public boolean sameSign(double a, double b)
-	{
-		boolean trying = a*b >= 0;
-		System.out.println("Comparing a: " + a + " and b: " + b + " ----> " +  trying);
-		return trying;
+	@Override
+
+	public boolean withinRotator(Point2D point) {
+		double x = (getPoint1().getX() +  getPoint2().getX() + getPoint3().getX())/3;
+		double y = Math.min(Math.min(getPoint1().getY(), getPoint2().getY()), getPoint3().getY());
+		Point2D rotator = new Point2D.Double((int)x+5, (int)y-20);
+		return (point.distance(rotator) <= 8);
 	}
 	
 }

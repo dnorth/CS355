@@ -27,8 +27,18 @@ public class Ellipse extends Shape{
 	
 	@Override
 	public boolean within(Point2D point, double tolerance) {
+		double rx = width/2.0;
+		double ry = height/2.0;
 		return (
-			(Math.pow((point.getX() - this.getCenter().getX()) / (width/2), 2) + Math.pow((point.getY() - this.getCenter().getY()) / (height/2), 2)) < 1	
+			(point.getX() * point.getX() / (rx * rx) + point.getY() * point.getY() / (ry*ry)) <= 1	
 		);
+	}
+	
+	@Override
+	public boolean withinRotator(Point2D point) {
+		Point2D rotator = new Point(5, (int)(-this.getHeight()/2 - 20));
+		if (point.distance(rotator) <= 8) return true;
+		else return false;
+
 	}
 }
