@@ -30,10 +30,16 @@ public class Rectangle extends Shape{
 	@Override
 	public boolean within(Point2D point, double tolerance) {
 		return (
-				point.getX() >= (this.getCenter().getX() - width/2) &&
-				point.getX() <= (this.getCenter().getX() + width/2) &&
-				point.getY() >= (this.getCenter().getY() - height/2) &&
-				point.getY() <= (this.getCenter().getY() + height/2)
+				point.getX() >= (-width/2) &&
+				point.getX() <= (width/2) &&
+				point.getY() >= (-height/2) &&
+				point.getY() <= (height/2)
 		);
+	}
+	
+	@Override
+	public boolean withinRotator(Point2D point) {
+		Point2D rotator = new Point(5, (int)(-this.getHeight()/2 - 19));
+		return point.distance(rotator) <= 8;
 	}
 }

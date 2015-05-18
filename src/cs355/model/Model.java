@@ -1,6 +1,7 @@
 package cs355.model;
 
 import java.awt.Color;
+import java.awt.geom.AffineTransform;
 import java.awt.geom.Point2D;
 import java.util.ArrayList;
 import java.util.Observable;
@@ -44,7 +45,14 @@ public class Model extends Observable {
 	public void setSelectedShape(Point2D worldPoint, double tolerance) {
 		Shape selected = null;
 		for (Shape shape : shapes) {
-			if(shape.within(worldPoint, tolerance))
+			AffineTransform worldToObj = new AffineTransform();
+			worldToObj.rotate(-1 * shape.getRotateAngle());
+			worldToObj.translate(-1 * shape.getCenter().getX(), -1 * shape.getCenter().getY());
+			
+			Point2D objCoord = new Point2D.Double();
+			worldToObj.transform(worldPoint, objCoord);
+			
+			if(shape.within(objCoord, tolerance))
 			{
 				selected = shape;
 			}
@@ -63,6 +71,11 @@ public class Model extends Observable {
 		for (Shape shape : shapes) {
 			shape.setSelected(false);
 		}
+		this.setChanged();
+		this.notifyObservers();
+	}
+	
+	public void update() {
 		this.setChanged();
 		this.notifyObservers();
 	}

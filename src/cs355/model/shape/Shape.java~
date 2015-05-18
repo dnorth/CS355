@@ -60,6 +60,7 @@ public abstract class Shape {
 
 	public boolean within(Point2D point, double tolerance) { return false; };
 	
+<<<<<<< HEAD
 	public AffineTransform objToWorld()
 	{
 		AffineTransform objToWorld = new CustomAffineTransform();
@@ -75,6 +76,7 @@ public abstract class Shape {
 		worldToObj.translate(-this.getCenter().getX(), -this.getCenter().getY());
 		return worldToObj;
 	}
-
+=======
 	public boolean withinRotator(Point2D p) { return false; };
+>>>>>>> d52393027c4936cd10b8757e1b1ec752dfc566f4
 }

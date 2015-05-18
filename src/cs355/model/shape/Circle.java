@@ -22,7 +22,13 @@ public class Circle extends Shape{
 	@Override
 	public boolean within(Point2D point, double tolerance) {
 		return (
-			Math.pow((Math.pow(point.getX() - this.getCenter().getX(), 2) + Math.pow(point.getY() - this.getCenter().getY(), 2)), 0.5) < radius	
+			(point.getX() * point.getX()) / (radius * radius) + (point.getY() * point.getY()) / (radius*radius) <= 1	
 		);
+	}
+	
+	@Override
+	public boolean withinRotator(Point2D point) {
+		Point2D rotator = new Point2D.Double(5, (int)(-this.getRadius() - 20));
+		return point.distance(rotator) <= 8;
 	}
 }

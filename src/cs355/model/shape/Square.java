@@ -21,10 +21,16 @@ public class Square extends Shape{
 	@Override
 	public boolean within(Point2D point, double tolerance) {
 		return (
-				point.getX() >= (this.getCenter().getX() - size/2) &&
-				point.getX() <= (this.getCenter().getX() + size/2) &&
-				point.getY() >= (this.getCenter().getY() - size/2) &&
-				point.getY() <= (this.getCenter().getY() + size/2)
+				point.getX() >= (-size/2) &&
+				point.getX() <= (size/2) &&
+				point.getY() >= (-size/2) &&
+				point.getY() <= (size/2)
 		);
+	}
+	
+	@Override
+	public boolean withinRotator(Point2D point) {
+		Point2D rotator = new Point2D.Double(5, (int)(-this.getSize()/2 - 20));
+		return point.distance(rotator) <= 8;
 	}
 }
