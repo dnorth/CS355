@@ -18,15 +18,18 @@ import cs355.controller.handler.SelectionHandler;
 import cs355.controller.handler.SquareHandler;
 import cs355.controller.handler.TriangleHandler;
 import cs355.model.Model;
+import cs355.view.MainView;
 
 public class MainController implements CS355Controller, MouseListener, MouseMotionListener{
 
 	private Model model;
+	private MainView view;
 	private Color color;
 	private DrawingHandler drawingHandler;
 	
-	public MainController(Model model) {
+	public MainController(Model model, MainView view) {
 		this.model = model;
+		this.view = view;
 		this.color = Color.WHITE;
 		this.drawingHandler = new NullDrawHandler();
 	}
@@ -87,26 +90,22 @@ public class MainController implements CS355Controller, MouseListener, MouseMoti
 
 	@Override
 	public void zoomInButtonHit() {
-		// TODO Auto-generated method stub
-		
+		view.zoomIn();
 	}
 
 	@Override
 	public void zoomOutButtonHit() {
-		// TODO Auto-generated method stub
-		
+		view.zoomOut();
 	}
 
 	@Override
 	public void hScrollbarChanged(int value) {
-		// TODO Auto-generated method stub
-		
+		view.scrollXTo(value);
 	}
 
 	@Override
 	public void vScrollbarChanged(int value) {
-		// TODO Auto-generated method stub
-		
+		view.scrollYTo(value);
 	}
 
 	@Override

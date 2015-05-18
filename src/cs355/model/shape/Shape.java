@@ -63,7 +63,8 @@ public abstract class Shape {
 	public AffineTransform objToWorld()
 	{
 		AffineTransform objToWorld = new CustomAffineTransform();
-		objToWorld.translate(this.getCenter().getX(), this.getCenter().getY());
+		//Add .5 to round and make sure the double isn't converted weirdly
+		objToWorld.translate(this.getCenter().getX() + .5, this.getCenter().getY() + .5);
 		objToWorld.rotate(this.getRotateAngle());
 		return objToWorld;
 	}
@@ -72,7 +73,8 @@ public abstract class Shape {
 	{
 		AffineTransform worldToObj = new CustomAffineTransform();
 		worldToObj.rotate(-this.getRotateAngle());
-		worldToObj.translate(-this.getCenter().getX(), -this.getCenter().getY());
+		//Subtract .5 to round and make sure the double isn't converted weirdly
+		worldToObj.translate(-this.getCenter().getX() - .5, -this.getCenter().getY() - .5);
 		return worldToObj;
 	}
 

@@ -17,6 +17,15 @@ import cs355.model.shape.Triangle;
 public class Drawer {
 	private Graphics2D g2D;
 	private int THICKNESS = 3;
+	AffineTransform objToWorld;
+	AffineTransform worldToView;
+	AffineTransform objToView;
+	MainView view;
+	
+	public Drawer(MainView view)
+	{
+		this.view = view;
+	}
 	
 	public Graphics2D getG2D() {
 		return g2D;
@@ -100,13 +109,14 @@ public class Drawer {
 	public void draw(Shape shape) {
 		if (shape != null)
 		{
-			AffineTransform objToWorld = new AffineTransform();
-			//Add .5 to round and make sure the double isn't converted weirdly
-			objToWorld.translate(shape.getCenter().getX() + .5, shape.getCenter().getY() + .5);
-			objToWorld.rotate(shape.getRotateAngle());
+			objToWorld = shape.objToWorld();
+			worldToView = view.getWorldToView();
+			
+			objToView = (AffineTransform)objToWorld.clone();
+			objToView.preConcatenate(worldToView);
 			g2D.setColor(shape.getColor());	
 			
-			g2D.setTransform(objToWorld);
+			g2D.setTransform(objToView);
 			
 			boolean selected = false;
 			if(shape.isSelected()) {
