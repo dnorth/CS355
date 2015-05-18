@@ -1,7 +1,10 @@
 package cs355.model.shape;
 
 import java.awt.Color;
+import java.awt.geom.AffineTransform;
 import java.awt.geom.Point2D;
+
+import cs355.view.CustomAffineTransform;
 
 public abstract class Shape {
 	
@@ -57,4 +60,19 @@ public abstract class Shape {
 
 	public boolean within(Point2D point, double tolerance) { return false; };
 	
+	public AffineTransform objToWorld()
+	{
+		AffineTransform objToWorld = new CustomAffineTransform();
+		objToWorld.translate(this.getCenter().getX(), this.getCenter().getY());
+		objToWorld.rotate(this.getRotateAngle());
+		return objToWorld;
+	}
+	
+	public AffineTransform worldToObj()
+	{
+		AffineTransform worldToObj = new CustomAffineTransform();
+		worldToObj.rotate(-this.getRotateAngle());
+		worldToObj.translate(-this.getCenter().getX(), -this.getCenter().getY());
+		return worldToObj;
+	}
 }
