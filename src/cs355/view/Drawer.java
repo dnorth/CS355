@@ -134,14 +134,15 @@ public class Drawer {
 	public void drawOutline(Shape shape) {
 		if (shape != null)
 		{
-			AffineTransform objToWorld = new AffineTransform();
-			g2D.setColor(Color.BLUE);
-			g2D.setStroke(new BasicStroke(THICKNESS));
-			//Add .5 to round and make sure the double isn't converted weirdly
-			objToWorld.translate(shape.getCenter().getX() + .5, shape.getCenter().getY() + .5);
-			objToWorld.rotate(shape.getRotateAngle());
+			objToWorld = shape.objToWorld();
+			worldToView = view.getWorldToView();
 			
-			g2D.setTransform(objToWorld);
+			objToView = (AffineTransform)objToWorld.clone();
+			objToView.preConcatenate(worldToView);
+			
+			g2D.setTransform(objToView);
+			g2D.setColor(Color.BLUE);
+			g2D.setStroke(new BasicStroke(THICKNESS));			
 			
 			lockTheTaskBar(shape);
 		}

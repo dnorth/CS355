@@ -64,14 +64,18 @@ public class MainView implements ViewRefresher, Observer{
 		
 		zoom *= 2;
 		
+		updateScrollBars();
 		updateWorldToView();
 		updateViewToWorld();
+		
+        GUIFunctions.setHScrollBarPosit((int) center.getX());
+        GUIFunctions.setVScrollBarPosit((int) center.getY());
 		
 		GUIFunctions.refresh();
 	}
 	
 	public void zoomOut()
-	{
+	{	
 		if (zoom <= 0.25) return;
 		
 		Point2D center = new Point2D.Double(canvasWidth/2.0, canvasHeight/2.0);
@@ -79,8 +83,12 @@ public class MainView implements ViewRefresher, Observer{
 		
 		zoom /= 2;
 		
+		updateScrollBars();
 		updateWorldToView();
 		updateViewToWorld();
+		
+        GUIFunctions.setHScrollBarPosit((int) center.getX());
+        GUIFunctions.setVScrollBarPosit((int) center.getY());
 		
 		GUIFunctions.refresh();
 	}
@@ -88,12 +96,26 @@ public class MainView implements ViewRefresher, Observer{
 	public void scrollXTo(double x_scroll)
 	{
 		this.scrollX = x_scroll;
+		updateWorldToView();
+		updateViewToWorld();
+		GUIFunctions.refresh();
 	}
 	
 	public void scrollYTo(double y_scroll)
 	{
 		this.scrollY = y_scroll;
+		updateWorldToView();
+		updateViewToWorld();
+		GUIFunctions.refresh();
 	}
+	
+    public void updateScrollBars() {
+        GUIFunctions.setHScrollBarMax((int) (zoom*canvasWidth));
+        GUIFunctions.setHScrollBarKnob((int) canvasWidth);
+
+        GUIFunctions.setVScrollBarMax((int) (zoom*canvasHeight));
+        GUIFunctions.setVScrollBarKnob((int) canvasHeight);
+    }
 	
 	public void updateWorldToView()
 	{
@@ -104,9 +126,9 @@ public class MainView implements ViewRefresher, Observer{
 	
 	public void updateViewToWorld()
 	{
-		worldToView.setToIdentity();
-		worldToView.scale(1/zoom, 1/zoom);
-		worldToView.translate(scrollX, scrollY);
+		viewToWorld.setToIdentity();
+		viewToWorld.scale(1/zoom, 1/zoom);
+		viewToWorld.translate(scrollX, scrollY);
 	}
 
 	public AffineTransform getWorldToView() {

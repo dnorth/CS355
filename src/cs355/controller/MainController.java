@@ -1,8 +1,10 @@
 package cs355.controller;
 import java.awt.Color;
+import java.awt.Point;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.awt.event.MouseMotionListener;
+import java.awt.geom.Point2D;
 import java.awt.image.BufferedImage;
 import java.util.Iterator;
 
@@ -186,7 +188,9 @@ public class MainController implements CS355Controller, MouseListener, MouseMoti
 
 	@Override
 	public void mouseDragged(MouseEvent e) {
-		drawingHandler.drag(e.getPoint());
+		Point2D p = new Point2D.Double();
+        view.getViewToWorld().transform(e.getPoint(), p);
+		drawingHandler.drag(new Point((int) p.getX(), (int) p.getY()));
 	}
 
 	@Override
@@ -197,7 +201,9 @@ public class MainController implements CS355Controller, MouseListener, MouseMoti
 
 	@Override
 	public void mousePressed(MouseEvent e) {
-		drawingHandler.start(e.getPoint());
+        Point2D p = new Point2D.Double();
+        view.getViewToWorld().transform(e.getPoint(), p);
+		drawingHandler.start(new Point((int) p.getX(), (int) p.getY()));
 	}
 
 	@Override
@@ -210,5 +216,21 @@ public class MainController implements CS355Controller, MouseListener, MouseMoti
 
 	@Override
 	public void mouseExited(MouseEvent e) {}
+
+	public MainView getView() {
+		return view;
+	}
+
+	public void setView(MainView view) {
+		this.view = view;
+	}
+
+	public DrawingHandler getDrawingHandler() {
+		return drawingHandler;
+	}
+
+	public void setDrawingHandler(DrawingHandler drawingHandler) {
+		this.drawingHandler = drawingHandler;
+	}
 
 }

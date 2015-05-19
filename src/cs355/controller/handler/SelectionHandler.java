@@ -23,10 +23,7 @@ public class SelectionHandler implements DrawingHandler{
 		this.point = start;
 		
 		if (this.controller.getModel().getSelectedShape() != null) {
-			AffineTransform worldToObj = new AffineTransform();
-			worldToObj.rotate(- this.controller.getModel().getSelectedShape().getRotateAngle());
-			Point2D center = this.controller.getModel().getSelectedShape().getCenter();
-			worldToObj.translate(- center.getX(), - center.getY());
+			AffineTransform worldToObj = this.controller.getModel().getSelectedShape().worldToObj();
 			Point2D objCoord = new Point2D.Double();
 			worldToObj.transform(point, objCoord);
 
