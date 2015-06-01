@@ -138,11 +138,11 @@ public class Drawer {
 			worldToView = view.getWorldToView();
 			
 			objToView = (AffineTransform)objToWorld.clone();
-			objToView.preConcatenate(worldToView);
+			objToView.preConcatenate(worldToView);			
+			g2D.setColor(Color.BLUE);
+			g2D.setStroke(new BasicStroke(THICKNESS));
 			
 			g2D.setTransform(objToView);
-			g2D.setColor(Color.BLUE);
-			g2D.setStroke(new BasicStroke(THICKNESS));			
 			
 			lockTheTaskBar(shape);
 		}
