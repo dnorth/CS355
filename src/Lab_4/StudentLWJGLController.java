@@ -2,6 +2,20 @@ package Lab_4;
 import static org.lwjgl.opengl.GL11.GL_LINE_STRIP;
 
 
+
+
+
+
+
+import java.awt.Color;
+import java.math.BigDecimal;
+import java.util.ArrayDeque;
+import java.util.Deque;
+import java.util.HashSet;
+
+
+
+
 //You might notice a lot of imports here.
 //You are probably wondering why I didn't just import org.lwjgl.opengl.GL11.*
 //Well, I did it as a hint to you.
@@ -44,7 +58,7 @@ public class StudentLWJGLController implements CS355LWJGLController
     //If not, I apologize.
     private WireFrame model = new HouseModel();
   
-    private Vector3f position = new Vector3f(0,-5,-20);
+    private Vector3f position = new Vector3f(-45,-10,-70);
     private float angle = 0;
 
     public void perspectiveMode() 
@@ -124,7 +138,7 @@ public class StudentLWJGLController implements CS355LWJGLController
 	    }
 	    if(Keyboard.isKeyDown(Keyboard.KEY_H)) 
 	    {
-	    	position = new Vector3f(0,-5,-20);
+	    	position = new Vector3f(-30,-10,-70);
 	        angle = 0;
 	    }
 	    if(Keyboard.isKeyDown(Keyboard.KEY_O)) 
@@ -142,22 +156,44 @@ public class StudentLWJGLController implements CS355LWJGLController
 	public void render() 
 	{
 	    glClear(GL_COLOR_BUFFER_BIT);
-	
+	    
+	    Deque<Transform> transformStack = new ArrayDeque<Transform>();
+	    transformStack.add(new Transform(15, angle, new Color(255, 255, 255)));
+	    transformStack.add(new Transform(15, angle, new Color(255, 0, 0)));
+	    transformStack.add(new Transform(15, angle, new Color(0, 0, 255)));
+	    transformStack.add(new Transform(15, angle, new Color(0, 255, 0)));
+	    transformStack.add(new Transform(15, angle, new Color(255, 102, 0)));
+
+	    
 	    glMatrixMode(GL_MODELVIEW);
 	    glLoadIdentity();
 	
 	    glRotatef(angle, 0, 1, 0);
 	    glTranslatef(position.x, position.y, position.z);
+	    
+	    //Draw multiple houses
+	    for (Transform house : transformStack)
+	    {
+		    //Extra translate per model 
+		    glTranslatef(house.getDisplacement(), 0, 0);
+		    
+		    //1 is 255/255 for all RGB Values
+		    glColor3f((float)(house.getColor().getRed() / 255.0), (float)(house.getColor().getGreen() / 255.0), (float)(house.getColor().getBlue() / 255.0));
+		
+		    for (Line3D line : model) {
+		        glBegin(GL_LINE_STRIP);
+		        glVertex3d(line.start.x, line.start.y, line.start.z);
+		        glVertex3d(line.end.x, line.end.y, line.end.z);
+		        glEnd();
+		    }
+		}
+	}
 	
-	    //1 is 255/255 for all RGB Values
-	    glColor3f(1, 1, 1);
-	
-	    for (Line3D line : model) {
-	        glBegin(GL_LINE_STRIP);
-	        glVertex3d(line.start.x, line.start.y, line.start.z);
-	        glVertex3d(line.end.x, line.end.y, line.end.z);
-	        glEnd();
-	    }
+	//xkcd.com/221
+	public float getRandomColor() 
+	{
+		return 4; // chosen by fair dice roll.
+				  // guaranteed to be random.
 	}
     
 }
