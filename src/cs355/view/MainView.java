@@ -165,11 +165,11 @@ public class MainView implements ViewRefresher, Observer{
 	    }
 	    if(c == 'R') 
 	    {
-	    	drawer.getCamera().y-=0.1;
+	    	drawer.getCamera().y+=0.1;
 	    }
 	    if(c == 'F') 
 	    {
-	    	drawer.getCamera().y+=0.1;
+	    	drawer.getCamera().y-=0.1;
 	    }
 	    if(c == 'H') 
 	    {
