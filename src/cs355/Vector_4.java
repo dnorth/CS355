@@ -14,13 +14,13 @@ public class Vector_4 {
 	}
 	
 	public void dot(Matrix_4 matrix) {
-		double l = x1, m = y1, q = z1, o = f1;
-		
-		x1 = matrix.getX1() * l + matrix.getX2() * m + matrix.getX3() * q + matrix.getX4() * o;
-		y1 = matrix.getY1() * l + matrix.getY2() * m + matrix.getY3() * q + matrix.getY4() * o;
-		z1 = matrix.getZ1() * l + matrix.getZ2() * m + matrix.getZ3() * q + matrix.getZ4() * o;
-		f1 = matrix.getF1() * l + matrix.getF2() * m + matrix.getF3() * q + matrix.getF4() * o;
-	}
+		double a = x1; double b = y1; double c = z1; double d = f1;
+
+		this.x1 = matrix.getX1()*a + matrix.getX2()*b + matrix.getX3()*c + matrix.getX4()*d;
+		this.y1 = matrix.getY1()*a + matrix.getY2()*b + matrix.getY3()*c + matrix.getY4()*d;
+		this.z1 = matrix.getZ1()*a + matrix.getZ2()*b + matrix.getZ3()*c + matrix.getZ4()*d;
+		this.f1 = matrix.getF1()*a + matrix.getF2()*b + matrix.getF3()*c + matrix.getF4()*d;
+		}
 
 	public double getX1() {
 		return x1;

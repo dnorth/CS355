@@ -6,6 +6,9 @@ import java.awt.geom.Point2D;
 import java.util.Observable;
 import java.util.Observer;
 
+import org.lwjgl.input.Keyboard;
+import org.lwjgl.util.vector.Vector3f;
+
 import cs355.GUIFunctions;
 import cs355.ViewRefresher;
 import cs355.model.Model;
@@ -26,12 +29,12 @@ public class MainView implements ViewRefresher, Observer{
 	
 	public MainView(Model model) {
 		this.model = model;
-		this.zoom = 1;
-		this.canvasHeight = 512;
-		this.canvasWidth = 512;
+		this.zoom = .25;
+		this.canvasHeight = 2048;
+		this.canvasWidth = 2048;
 		this.scrollX = 0;
 		this.scrollY = 0;
-		this.draw3D = true;
+		this.draw3D = false;
 		this.worldToView = new CustomAffineTransform();
 		this.viewToWorld = new CustomAffineTransform();	
 		this.drawer = new Drawer(this);
@@ -132,7 +135,48 @@ public class MainView implements ViewRefresher, Observer{
 	}
 	
 	public void handleKey(char c) {
-		
+	    if(c == 'W') 
+	    {
+	    	drawer.getCamera().z += 0.1 * Math.cos(Math.toRadians(drawer.getCamera().angle));
+	    	drawer.getCamera().x -= 0.1 * Math.sin(Math.toRadians(drawer.getCamera().angle));
+	    }
+	    if(c == 'A') 
+	    {
+	    	drawer.getCamera().z += 0.1 * Math.cos(Math.toRadians(drawer.getCamera().angle + 90));
+	    	drawer.getCamera().x -= 0.1 * Math.sin(Math.toRadians(drawer.getCamera().angle + 90));
+	    }
+	    if(c == 'S') 
+	    {
+	    	drawer.getCamera().z -= 0.1 * Math.cos(Math.toRadians(drawer.getCamera().angle));
+	    	drawer.getCamera().x += 0.1 * Math.sin(Math.toRadians(drawer.getCamera().angle));
+	    }
+	    if(c == 'D') 
+	    {
+	    	drawer.getCamera().z -= 0.1 * Math.cos(Math.toRadians(drawer.getCamera().angle + 90));
+	    	drawer.getCamera().x += 0.1 * Math.sin(Math.toRadians(drawer.getCamera().angle + 90));
+	    }
+	    if(c == 'Q') 
+	    {
+	    	drawer.getCamera().angle+=1;
+	    }
+	    if(c == 'E') 
+	    {
+	    	drawer.getCamera().angle-=1;
+	    }
+	    if(c == 'R') 
+	    {
+	    	drawer.getCamera().y-=0.1;
+	    }
+	    if(c == 'F') 
+	    {
+	    	drawer.getCamera().y+=0.1;
+	    }
+	    if(c == 'H') 
+	    {
+	    	drawer.setCamera(new Camera(0,5,20));
+	    	drawer.getCamera().angle = 180;
+	    }
+		GUIFunctions.refresh();
 	}
 
 	public AffineTransform getWorldToView() {
@@ -212,6 +256,7 @@ public class MainView implements ViewRefresher, Observer{
 	}
 
 	public void setDraw3D(boolean draw3d) {
+		updateWorldToView();
 		draw3D = draw3d;
 	}
 

@@ -8,9 +8,9 @@ import cs355.Vector_4;
 public class Camera {
 
 	public double x, y, z;
-	public double angle = 0;
+	public double angle = 180;
 	
-	double fov = 60, near = 1, far = 50;
+	double fov = 60, near = 1, far = 100;
 	double zoom = 1/Math.tan(Math.toRadians(fov / 2));
 	double WIDTH = 2048;
 	double HEIGHT = 2048;
@@ -56,19 +56,43 @@ public class Camera {
 		return matrix;
 	}
 	
-	public boolean isWithinView(Vector_4 vector) {
-		return (vector.getX1() < 1 && vector.getX1() > -1 && 
-				vector.getY1() < 1 && vector.getY1() > -1 &&
-				vector.getZ1() < 1 && vector.getZ1() > -1);
+	public boolean isWithinView(Vector_4 start, Vector_4 end) {
+		return (((start.getX1() < 1 && start.getX1() > -1 && start.getY1() < 1 && start.getY1() > -1 ) || 
+				(end.getX1() < 1 && end.getX1() > -1 && end.getY1() < 1 && end.getY1() > -1)) && 
+				start.getZ1() < 1 && start.getZ1() > -1 && end.getZ1() < 1 && end.getZ1() > -1);
 	}
 	
 	public Point2D getScreenPoint(Vector_4 vector) {
 		Point2D p = new Point2D.Double();
 		p.setLocation(
 				((WIDTH/2) * vector.getX1() + (WIDTH/2)) + .5, 
-				-(((-HEIGHT/2) * vector.getY1() + (HEIGHT/2)) + .5)
+				((-HEIGHT/2) * vector.getY1() + (HEIGHT/2)) + .5
 		);
 		
 		return p;
+	}
+
+	public double getX() {
+		return x;
+	}
+
+	public void setX(double x) {
+		this.x = x;
+	}
+
+	public double getY() {
+		return y;
+	}
+
+	public void setY(double y) {
+		this.y = y;
+	}
+
+	public double getZ() {
+		return z;
+	}
+
+	public void setZ(double z) {
+		this.z = z;
 	}
 }

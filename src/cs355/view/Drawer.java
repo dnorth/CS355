@@ -37,7 +37,7 @@ public class Drawer {
 	public Drawer(MainView view)
 	{
 		this.houseModel = new HouseModel();
-		this.camera = new Camera(0, 5, -20);
+		this.camera = new Camera(0, 5, 20);
 		this.view = view;
 	}
 	
@@ -192,6 +192,9 @@ public class Drawer {
 	}
 
 	public void drawHouse() {
+		
+		g2D.setTransform(view.getWorldToView());
+
 	    for (Line3D line : houseModel) {
 	    	Vector_4 start = new Vector_4(line.start.x,line.start.y,line.start.z,1);
 	    	Vector_4 end = new Vector_4(line.end.x,line.end.y,line.end.z,1);
@@ -202,19 +205,21 @@ public class Drawer {
 	    	
 	    	start = camera.getClipMatrix(start);
 	    	end = camera.getClipMatrix(end);
-	    	System.out.println("About to check.....");
-	    	if(camera.isWithinView(start) && camera.isWithinView(end)) {
-		    	System.out.println("This Line is within the view!!!");
+	    	if(camera.isWithinView(start, end)) {
 	    		Point2D startPoint = camera.getScreenPoint(start);
 	    		Point2D endPoint = camera.getScreenPoint(end);
-	    		
-		    	System.out.println("Start X: " + startPoint.getX() + " Start Y: " + startPoint.getY());
-		    	System.out.println("End X: " + endPoint.getX() + " End Y: " + endPoint.getY());
-
 	    		
 	    		g2D.drawLine((int)startPoint.getX(), (int)startPoint.getY(), (int)endPoint.getX(), (int)endPoint.getY());
 
 	    	}
 	    }
+	}
+
+	public Camera getCamera() {
+		return camera;
+	}
+
+	public void setCamera(Camera camera) {
+		this.camera = camera;
 	}
 }

@@ -113,6 +113,7 @@ public class MainController implements CS355Controller, MouseListener, MouseMoti
 	@Override
 	public void toggle3DModelDisplay() {
 		view.setDraw3D(!view.isDraw3D());
+		GUIFunctions.refresh();
 	}
 
 	@Override

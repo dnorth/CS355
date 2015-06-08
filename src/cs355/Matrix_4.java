@@ -28,36 +28,34 @@ public class Matrix_4 {
 		this.f4 = f4;
 	}
 	
-	public void dot(double a1, double a2, double a3, double a4, double b1,
-			double b2, double b3, double b4, double c1, double c2, double c3,
-			double c4, double d1, double d2, double d3, double d4) {
-	
-			double l1 = x1, l2 = x2, l3 = x3, l4 = x4; 
-			double m1 = y1, m2 = y2, m3 = y3, m4 = y4;
-			double q1 = z1, q2 = z2, q3 = z3, q4 = z4;
-			double o1 = f1, o2 = f2, o3 = f3, o4 = f4;
-			
-			x1 = l1*a1 + l2*b1 + l3*c1 + l4*d1;
-			x2 = l1*a2 + l2*b2 + l3*c2 + l4*d2;
-			x3 = l1*a3 + l2*b3 + l3*c3 + l4*d3;
-			x4 = l1*a4 + l2*b4 + l3*c4 + l4*d4;
-			
-			y1 = m1*a1 + m2*b1 + m3*c1 + m4*d1;
-			y2 = m1*a2 + m2*b2 + m3*c2 + m4*d2;
-			y3 = m1*a3 + m2*b3 + m3*c3 + m4*d3;
-			y4 = m1*a4 + m2*b4 + m3*c4 + m4*d4;
+	public void dot(double x1, double x2, double x3, double x4, double y1,
+			double y2, double y3, double y4, double z1, double z2, double z3,
+			double z4, double f1, double f2, double f3, double f4){
+			double a1 = this.x1; double a2 = this.x2; double a3 = this.x3; double a4 = this.x4;
+			double b1 = this.y1; double b2 = this.y2; double b3 = this.y3; double b4 = this.y4;
+			double c1 = this.z1; double c2 = this.z2; double c3 = this.z3; double c4 = this.z4;
+			double d1 = this.f1; double d2 = this.f2; double d3 = this.f3; double d4 = this.f4;
 
-			z1 = q1*a1 + q2*b1 + q3*c1 + q4*d1;
-			z2 = q1*a2 + q2*b2 + q3*c2 + q4*d2;
-			z3 = q1*a3 + q2*b3 + q3*c3 + q4*d3;
-			z4 = q1*a4 + q2*b4 + q3*c4 + q4*d4;
-			
-			f1 = o1*a1 + o2*b1 + o3*c1 + o4*d1;
-			f2 = o1*a2 + o2*b2 + o3*c2 + o4*d2;
-			f3 = o1*a3 + o2*b3 + o3*c3 + o4*d3;
-			f4 = o1*a4 + o2*b4 + o3*c4 + o4*d4;
-		
-	}
+			this.x1 = a1*x1 + b1*x2 + c1*x3 + d1*x4;
+			this.x2 = a2*x1 + b2*x2 + c2*x3 + d2*x4;
+			this.x3 = a3*x1 + b3*x2 + c3*x3 + d3*x4;
+			this.x4 = a4*x1 + b4*x2 + c4*x3 + d4*x4;
+
+			this.y1 = a1*y1 + b1*y2 + c1*y3 + d1*y4;
+			this.y2 = a2*y1 + b2*y2 + c2*y3 + d2*y4;
+			this.y3 = a3*y1 + b3*y2 + c3*y3 + d3*y4;
+			this.y4 = a4*y1 + b4*y2 + c4*y3 + d4*y4;
+
+			this.z1 = a1*z1 + b1*z2 + c1*z3 + d1*z4;
+			this.z2 = a2*z1 + b2*z2 + c2*z3 + d2*z4;
+			this.z3 = a3*z1 + b3*z2 + c3*z3 + d3*z4;
+			this.z4 = a4*z1 + b4*z2 + c4*z3 + d4*z4;
+
+			this.f1 = a1*f1 + b1*f2 + c1*f3 + d1*f4;
+			this.f2 = a2*f1 + b2*f2 + c2*f3 + d2*f4;
+			this.f3 = a3*f1 + b3*f2 + c3*f3 + d3*f4;
+			this.f4 = a4*f1 + b4*f2 + c4*f3 + d4*f4;
+			}
 
 	public double getX1() {
 		return x1;
