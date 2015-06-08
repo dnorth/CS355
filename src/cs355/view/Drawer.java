@@ -202,9 +202,18 @@ public class Drawer {
 	    	
 	    	start = camera.getClipMatrix(start);
 	    	end = camera.getClipMatrix(end);
-	    	
+	    	System.out.println("About to check.....");
 	    	if(camera.isWithinView(start) && camera.isWithinView(end)) {
-	    		//DRAW THAT LINE!!!!!!!
+		    	System.out.println("This Line is within the view!!!");
+	    		Point2D startPoint = camera.getScreenPoint(start);
+	    		Point2D endPoint = camera.getScreenPoint(end);
+	    		
+		    	System.out.println("Start X: " + startPoint.getX() + " Start Y: " + startPoint.getY());
+		    	System.out.println("End X: " + endPoint.getX() + " End Y: " + endPoint.getY());
+
+	    		
+	    		g2D.drawLine((int)startPoint.getX(), (int)startPoint.getY(), (int)endPoint.getX(), (int)endPoint.getY());
+
 	    	}
 	    }
 	}

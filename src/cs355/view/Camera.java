@@ -1,5 +1,7 @@
 package cs355.view;
 
+import java.awt.geom.Point2D;
+
 import cs355.Matrix_4;
 import cs355.Vector_4;
 
@@ -10,6 +12,8 @@ public class Camera {
 	
 	double fov = 60, near = 1, far = 50;
 	double zoom = 1/Math.tan(Math.toRadians(fov / 2));
+	double WIDTH = 2048;
+	double HEIGHT = 2048;
 	
 	public Camera(double x, double y, double z) {
 		this.x = x;
@@ -56,5 +60,15 @@ public class Camera {
 		return (vector.getX1() < 1 && vector.getX1() > -1 && 
 				vector.getY1() < 1 && vector.getY1() > -1 &&
 				vector.getZ1() < 1 && vector.getZ1() > -1);
+	}
+	
+	public Point2D getScreenPoint(Vector_4 vector) {
+		Point2D p = new Point2D.Double();
+		p.setLocation(
+				((WIDTH/2) * vector.getX1() + (WIDTH/2)) + .5, 
+				-(((-HEIGHT/2) * vector.getY1() + (HEIGHT/2)) + .5)
+		);
+		
+		return p;
 	}
 }
