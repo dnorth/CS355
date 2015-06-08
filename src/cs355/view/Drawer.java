@@ -1,11 +1,21 @@
 package cs355.view;
 
+import static org.lwjgl.opengl.GL11.GL_LINE_STRIP;
+import static org.lwjgl.opengl.GL11.glBegin;
+import static org.lwjgl.opengl.GL11.glEnd;
+import static org.lwjgl.opengl.GL11.glVertex3d;
+
 import java.awt.BasicStroke;
 import java.awt.Color;
 import java.awt.Graphics2D;
 import java.awt.geom.AffineTransform;
 import java.awt.geom.Point2D;
 
+import cs355.Line3D;
+import cs355.HouseModel;
+import cs355.Matrix_4;
+import cs355.Vector_4;
+import cs355.WireFrame;
 import cs355.model.shape.Circle;
 import cs355.model.shape.Ellipse;
 import cs355.model.shape.Line;
@@ -17,6 +27,8 @@ import cs355.model.shape.Triangle;
 public class Drawer {
 	private Graphics2D g2D;
 	private int THICKNESS = 3;
+	private WireFrame houseModel;
+	private Camera camera;
 	AffineTransform objToWorld;
 	AffineTransform worldToView;
 	AffineTransform objToView;
@@ -24,6 +36,8 @@ public class Drawer {
 	
 	public Drawer(MainView view)
 	{
+		this.houseModel = new HouseModel();
+		this.camera = new Camera(0, 5, -20);
 		this.view = view;
 	}
 	
@@ -175,5 +189,23 @@ public class Drawer {
 	{
 		g2D.setColor(Color.BLUE);
 		g2D.fillOval((int)x,(int)y - offset, 10, 10);
+	}
+
+	public void drawHouse() {
+	    for (Line3D line : houseModel) {
+	    	Vector_4 start = new Vector_4(line.start.x,line.start.y,line.start.z,1);
+	    	Vector_4 end = new Vector_4(line.end.x,line.end.y,line.end.z,1);
+	    	
+	    	Matrix_4 worldToCameraMatrix = camera.getWorldToCameraMatrix();
+	    	start.dot(worldToCameraMatrix);
+	    	end.dot(worldToCameraMatrix);
+	    	
+	    	start = camera.getClipMatrix(start);
+	    	end = camera.getClipMatrix(end);
+	    	
+	    	if(camera.isWithinView(start) && camera.isWithinView(end)) {
+	    		//DRAW THAT LINE!!!!!!!
+	    	}
+	    }
 	}
 }

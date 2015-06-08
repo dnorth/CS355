@@ -112,14 +112,16 @@ public class MainController implements CS355Controller, MouseListener, MouseMoti
 
 	@Override
 	public void toggle3DModelDisplay() {
-		// TODO Auto-generated method stub
-		
+		view.setDraw3D(!view.isDraw3D());
 	}
 
 	@Override
 	public void keyPressed(Iterator<Integer> iterator) {
-		// TODO Auto-generated method stub
-		
+		if(view.isDraw3D()) {
+			while(iterator.hasNext()) {
+				view.handleKey((char) (int) iterator.next());
+			}
+		}
 	}
 
 	@Override

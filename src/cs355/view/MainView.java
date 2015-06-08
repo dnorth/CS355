@@ -22,6 +22,7 @@ public class MainView implements ViewRefresher, Observer{
 	private double canvasWidth;
 	private double scrollX;
 	private double scrollY;
+	private boolean draw3D; 
 	
 	public MainView(Model model) {
 		this.model = model;
@@ -30,6 +31,7 @@ public class MainView implements ViewRefresher, Observer{
 		this.canvasWidth = 512;
 		this.scrollX = 0;
 		this.scrollY = 0;
+		this.draw3D = true;
 		this.worldToView = new CustomAffineTransform();
 		this.viewToWorld = new CustomAffineTransform();	
 		this.drawer = new Drawer(this);
@@ -47,6 +49,10 @@ public class MainView implements ViewRefresher, Observer{
 		
 		drawer.draw(model.getActiveShape());
 		drawer.drawOutline(model.getSelectedShape());
+		
+		if( draw3D) {
+			drawer.drawHouse();
+		}
 	}
 
 	@Override
@@ -55,8 +61,7 @@ public class MainView implements ViewRefresher, Observer{
 		GUIFunctions.refresh();
 	}
 	
-	public void zoomIn()
-	{
+	public void zoomIn() {
 		if (zoom >= 4) return;
 		
 		Point2D center = new Point2D.Double(canvasWidth/2.0, canvasHeight/2.0);
@@ -74,8 +79,7 @@ public class MainView implements ViewRefresher, Observer{
 		GUIFunctions.refresh();
 	}
 	
-	public void zoomOut()
-	{	
+	public void zoomOut() {	
 		if (zoom <= 0.25) return;
 		
 		Point2D center = new Point2D.Double(canvasWidth/2.0, canvasHeight/2.0);
@@ -93,16 +97,14 @@ public class MainView implements ViewRefresher, Observer{
 		GUIFunctions.refresh();
 	}
 	
-	public void scrollXTo(double x_scroll)
-	{
+	public void scrollXTo(double x_scroll) {
 		this.scrollX = x_scroll;
 		updateWorldToView();
 		updateViewToWorld();
 		GUIFunctions.refresh();
 	}
 	
-	public void scrollYTo(double y_scroll)
-	{
+	public void scrollYTo(double y_scroll) {
 		this.scrollY = y_scroll;
 		updateWorldToView();
 		updateViewToWorld();
@@ -117,18 +119,20 @@ public class MainView implements ViewRefresher, Observer{
         GUIFunctions.setVScrollBarKnob((int) canvasHeight);
     }
 	
-	public void updateWorldToView()
-	{
+	public void updateWorldToView() {
 		worldToView.setToIdentity();
 		worldToView.translate(-scrollX, -scrollY);
 		worldToView.scale(zoom, zoom);
 	}
 	
-	public void updateViewToWorld()
-	{
+	public void updateViewToWorld() {
 		viewToWorld.setToIdentity();
 		viewToWorld.scale(1/zoom, 1/zoom);
 		viewToWorld.translate(scrollX, scrollY);
+	}
+	
+	public void handleKey(char c) {
+		
 	}
 
 	public AffineTransform getWorldToView() {
@@ -145,6 +149,70 @@ public class MainView implements ViewRefresher, Observer{
 
 	public void setViewToWorld(AffineTransform viewToWorld) {
 		this.viewToWorld = viewToWorld;
+	}
+
+	public Model getModel() {
+		return model;
+	}
+
+	public void setModel(Model model) {
+		this.model = model;
+	}
+
+	public Drawer getDrawer() {
+		return drawer;
+	}
+
+	public void setDrawer(Drawer drawer) {
+		this.drawer = drawer;
+	}
+
+	public double getZoom() {
+		return zoom;
+	}
+
+	public void setZoom(double zoom) {
+		this.zoom = zoom;
+	}
+
+	public double getCanvasHeight() {
+		return canvasHeight;
+	}
+
+	public void setCanvasHeight(double canvasHeight) {
+		this.canvasHeight = canvasHeight;
+	}
+
+	public double getCanvasWidth() {
+		return canvasWidth;
+	}
+
+	public void setCanvasWidth(double canvasWidth) {
+		this.canvasWidth = canvasWidth;
+	}
+
+	public double getScrollX() {
+		return scrollX;
+	}
+
+	public void setScrollX(double scrollX) {
+		this.scrollX = scrollX;
+	}
+
+	public double getScrollY() {
+		return scrollY;
+	}
+
+	public void setScrollY(double scrollY) {
+		this.scrollY = scrollY;
+	}
+
+	public boolean isDraw3D() {
+		return draw3D;
+	}
+
+	public void setDraw3D(boolean draw3d) {
+		draw3D = draw3d;
 	}
 
 }
