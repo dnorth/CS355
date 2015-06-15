@@ -1,15 +1,12 @@
 package cs355.view;
 
-import static org.lwjgl.opengl.GL11.GL_LINE_STRIP;
-import static org.lwjgl.opengl.GL11.glBegin;
-import static org.lwjgl.opengl.GL11.glEnd;
-import static org.lwjgl.opengl.GL11.glVertex3d;
-
 import java.awt.BasicStroke;
 import java.awt.Color;
 import java.awt.Graphics2D;
 import java.awt.geom.AffineTransform;
 import java.awt.geom.Point2D;
+import java.awt.image.BufferedImage;
+import java.awt.image.WritableRaster;
 
 import cs355.Line3D;
 import cs355.HouseModel;
@@ -213,6 +210,31 @@ public class Drawer {
 
 	    	}
 	    }
+	}
+	
+	public void displayActiveImage(BufferedImage activeImage) {
+		System.out.println("Drawing Image!");
+		g2D.setTransform(view.getWorldToView());
+
+		BufferedImage bufferedImage = new BufferedImage(activeImage.getWidth(), activeImage.getHeight(), BufferedImage.TYPE_BYTE_GRAY);
+		bufferedImage.getGraphics().drawImage(activeImage, 0, 0, null);
+		WritableRaster r = bufferedImage.getRaster();
+		int[] rgbArray = bufferedImage.getRGB(0, 0, bufferedImage.getWidth(), bufferedImage.getHeight(), null, 0, bufferedImage.getWidth());
+		
+		for( int i=0; i < rgbArray.length; i++ ) {
+			System.out.println("--------------------");
+			System.out.println(rgbArray[i]);
+			Color c = new Color(rgbArray[i]);
+			System.out.println(c.getRed());
+			System.out.println(c.getGreen());
+			System.out.println(c.getBlue());
+			System.out.println(c.getAlpha());
+		}
+		
+		//r.setPixel(bufferedImage.getWidth(), bufferedImage.getHeight(), rgbArray);
+		g2D.drawImage(bufferedImage, null, (2048 - bufferedImage.getWidth())/2, (2048 - bufferedImage.getHeight())/2);
+		//(2048 - i.getWidth())/2, (2048 - i.getHeight())/2
+		//g2D.drawImage(i, null, (2048 - i.getWidth())/2, );
 	}
 
 	public Camera getCamera() {

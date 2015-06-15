@@ -3,6 +3,7 @@ package cs355.model;
 import java.awt.Color;
 import java.awt.geom.AffineTransform;
 import java.awt.geom.Point2D;
+import java.awt.image.BufferedImage;
 import java.util.ArrayList;
 import java.util.Observable;
 
@@ -17,13 +18,14 @@ import cs355.model.shape.Triangle;
 public class Model extends Observable {
 	private Shape activeShape;
 	private ArrayList<Shape> shapes = new ArrayList<Shape>();
+	private BufferedImage openImage = null;
 	
 	public void addActiveShape() {
 		shapes.add(activeShape);
-		this.setChanged();
-		this.notifyObservers();
+		update();
 	}
 
+	
 	public ArrayList<Shape> getShapes() {
 		return shapes;
 	}
@@ -38,8 +40,7 @@ public class Model extends Observable {
 
 	public void setActiveShape(Shape activeShape) {
 		this.activeShape = activeShape;
-		this.setChanged();
-		this.notifyObservers();
+		update();
 	}
 	
 	public void setSelectedShape(Point2D worldPoint, double tolerance) {
@@ -71,8 +72,7 @@ public class Model extends Observable {
 		for (Shape shape : shapes) {
 			shape.setSelected(false);
 		}
-		this.setChanged();
-		this.notifyObservers();
+		update();
 	}
 	
 	public void update() {
@@ -93,7 +93,19 @@ public class Model extends Observable {
 	
 	public void setSelectedColor(Shape shape, Color c) {
 		shape.setColor(c);
-		this.setChanged();
-		this.notifyObservers();
+		update();
+	}
+
+
+
+	public BufferedImage getOpenImage() {
+		return openImage;
+	}
+
+
+
+	public void setOpenImage(BufferedImage openImage) {
+		this.openImage = openImage;
+		update();
 	}
 }

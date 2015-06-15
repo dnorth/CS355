@@ -163,7 +163,7 @@ public class MainController implements CS355Controller, MouseListener, MouseMoti
 
 	@Override
 	public void doLoadImage(BufferedImage openImage) {
-		// TODO Auto-generated method stub
+		model.setOpenImage(openImage);
 		
 	}
 
