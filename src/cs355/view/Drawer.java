@@ -217,7 +217,6 @@ public class Drawer {
 		g2D.setTransform(view.getWorldToView());
 
 		BufferedImage bufferedImage = new BufferedImage(activeImage.getWidth(), activeImage.getHeight(), BufferedImage.TYPE_BYTE_GRAY);
-		//bufferedImage.getGraphics().drawImage(activeImage, 0, 0, null);
 		WritableRaster r = bufferedImage.getRaster();
 		for(int i=0; i < activeImage.getWidth(); i++) {
 			for(int j=0; j < activeImage.getHeight(); j++) {

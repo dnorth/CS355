@@ -2,12 +2,12 @@
 <classpath>
 	<classpathentry kind="src" path="src"/>
 	<classpathentry exported="true" kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
-	<classpathentry kind="lib" path="/home/dnorth/workspace/CS355/Lab_4/lwjgl-2.9.3/jar/lwjgl_util.jar">
+	<classpathentry kind="lib" path="Lab_4/lwjgl-2.9.3/jar/lwjgl_util.jar">
 		<attributes>
 			<attribute name="org.eclipse.jdt.launching.CLASSPATH_ATTR_LIBRARY_PATH_ENTRY" value="CS355/Lab_4/lwjgl-2.9.3/native/linux"/>
 		</attributes>
 	</classpathentry>
-	<classpathentry kind="lib" path="/home/dnorth/workspace/CS355/Lab_4/lwjgl-2.9.3/jar/lwjgl.jar">
+	<classpathentry kind="lib" path="Lab_4/lwjgl-2.9.3/jar/lwjgl.jar">
 		<attributes>
 			<attribute name="org.eclipse.jdt.launching.CLASSPATH_ATTR_LIBRARY_PATH_ENTRY" value="CS355/Lab_4/lwjgl-2.9.3/native/linux"/>
 		</attributes>

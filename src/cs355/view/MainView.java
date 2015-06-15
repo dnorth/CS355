@@ -73,48 +73,57 @@ public class MainView implements ViewRefresher, Observer{
 		if (zoom >= 4) return;
 		zoom *= 2;
 		
-		updateScrollBars();
+		Point2D center = new Point2D.Double((canvasWidth)/2.0, (canvasHeight)/2.0);
+		viewToWorld.transform(center, center);
+		
 		updateWorldToView();
 		updateViewToWorld();
 		
-		Point2D center = new Point2D.Double((canvasWidth)/2.0, (canvasHeight)/2.0);
-		System.out.println("Center: " + center);
-		viewToWorld.transform(center, center);
-		System.out.println("New Center: " + center);
+		scrollToCenter(center);
 		
-
-		
-        GUIFunctions.setHScrollBarPosit((int) center.getX());
-        GUIFunctions.setVScrollBarPosit((int) center.getY());
-		
+		updateScrollBars();
 		GUIFunctions.refresh();
 	}
 	
 	public void zoomOut() {	
 		if (zoom <= .25) return;
 		zoom /= 2;
+
 		
-		updateScrollBars();
+		Point2D center = new Point2D.Double((canvasWidth)/2.0, (canvasHeight)/2.0);
+		viewToWorld.transform(center, center);
+		
+		
 		updateWorldToView();
 		updateViewToWorld();
 		
-		Point2D center = new Point2D.Double((canvasWidth)/2.0, (canvasHeight)/2.0);
-		System.out.println("Center: " + center);
-		viewToWorld.transform(center, center);
-		System.out.println("New Center: " + center);
-
-		
-        GUIFunctions.setHScrollBarPosit((int) center.getX());
-        GUIFunctions.setVScrollBarPosit((int) center.getY());
+		scrollToCenter(center);
+		updateScrollBars();
 		
 		GUIFunctions.refresh();
+	}
+	
+	public void scrollToCenter(Point2D center) {
+
+		worldToView.transform(center, center);
+
+		double x = center.getX() - (canvasWidth/(4*zoom));
+
+		double y = center.getY() - (canvasHeight/(4*zoom));
+
+
+		GUIFunctions.setHScrollBarPosit((int) x);
+		GUIFunctions.setVScrollBarPosit((int) y);
+
+		this.scrollXTo(x);
+		this.scrollYTo(y);
+
 	}
 	
 	public void scrollXTo(double x_scroll) {
 		this.scrollX = x_scroll;
 		updateWorldToView();
 		updateViewToWorld();
-		System.out.println("Scroll X: " + scrollX);
 		GUIFunctions.refresh();
 	}
 	
@@ -122,7 +131,6 @@ public class MainView implements ViewRefresher, Observer{
 		this.scrollY = y_scroll;
 		updateWorldToView();
 		updateViewToWorld();
-		System.out.println("Scroll Y: " + scrollY);
 		GUIFunctions.refresh();
 	}
 	
@@ -133,11 +141,6 @@ public class MainView implements ViewRefresher, Observer{
             GUIFunctions.setVScrollBarPosit(0);
     	}
     	
-    	System.out.println("Canvas Width Max: " + (int) (canvasWidth * 4));
-    	System.out.println("Canvas Height Max: " + (int) (canvasHeight * 4));
-    	System.out.println("Canvas Width Current: " + (int) (canvasWidth / zoom));
-    	System.out.println("Canvas Width Current: " + (int) (canvasWidth / zoom));
-    	System.out.println("Zoom: " + zoom);
         GUIFunctions.setHScrollBarKnob((int) (canvasWidth / zoom));
         GUIFunctions.setHScrollBarMax((int) (2048 * zoom));
         GUIFunctions.setVScrollBarMax((int) (2048 * zoom));

@@ -153,19 +153,17 @@ public class MainController implements CS355Controller, MouseListener, MouseMoti
 
 	@Override
 	public void doChangeContrast(int contrastAmountNum) {
-		// TODO Auto-generated method stub
+		model.changeImageConstrast(contrastAmountNum);
 		
 	}
 
 	@Override
 	public void doChangeBrightness(int brightnessAmountNum) {
-		// TODO Auto-generated method stub
-		
+		model.changeImageBrightness(brightnessAmountNum);
 	}
 
 	@Override
 	public void doLoadImage(BufferedImage openImage) {
-		
 		WritableRaster raster = openImage.getRaster();
 		int[][] pixels = new int[raster.getWidth()][raster.getHeight()];
 		

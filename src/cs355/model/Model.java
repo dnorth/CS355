@@ -109,4 +109,38 @@ public class Model extends Observable {
 		this.openImage = openImage;
 		update();
 	}
+	
+	public void changeImageBrightness(int value) {
+		for(int i=0; i < openImage.width; i++) {
+			for(int j=0; j < openImage.height; j++) {
+				int data = openImage.pixelData[i][j];
+				if(data + value > 255) {
+					openImage.pixelData[i][j] = 255;
+				} else if(data + value < 0 ) {
+					openImage.pixelData[i][j] = 0;
+				}	else {
+					openImage.pixelData[i][j] = data + value;
+				}
+			}
+		}
+		update();
+	}
+	
+	public void changeImageConstrast(int value) {
+		double scalar = Math.pow((double)(value + 100)/ 100.00, 4);
+		
+		for(int i=0; i < openImage.width; i++) {
+			for(int j=0; j < openImage.height; j++) {
+				int data = openImage.pixelData[i][j];
+				openImage.pixelData[i][j] = (int)(scalar*(data - 128) + 128);
+				
+				if(openImage.pixelData[i][j] > 255) {
+					openImage.pixelData[i][j] = 255;
+				} else if(openImage.pixelData[i][j] < 0 ) {
+					openImage.pixelData[i][j] = 0;
+				}
+			}
+		}
+		update();
+	}
 }
