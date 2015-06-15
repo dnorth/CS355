@@ -129,26 +129,22 @@ public class MainController implements CS355Controller, MouseListener, MouseMoti
 
 	@Override
 	public void doEdgeDetection() {
-		// TODO Auto-generated method stub
-		
+		model.doEdgeDetection();
 	}
 
 	@Override
 	public void doSharpen() {
-		// TODO Auto-generated method stub
-		
+		model.doSharpen();		
 	}
 
 	@Override
 	public void doMedianBlur() {
-		// TODO Auto-generated method stub
-		
+		model.doMedianBlur();
 	}
 
 	@Override
 	public void doUniformBlur() {
-		// TODO Auto-generated method stub
-		
+		model.doUniformBlur();
 	}
 
 	@Override

@@ -6,6 +6,7 @@ import java.awt.geom.Point2D;
 import java.awt.image.BufferedImage;
 import java.awt.image.WritableRaster;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Observable;
 
 import cs355.model.shape.Circle;
@@ -141,6 +142,117 @@ public class Model extends Observable {
 				}
 			}
 		}
+		update();
+	}
+	
+	public void doUniformBlur() {
+		int[][] newPixelData = new int[openImage.width][openImage.height];
+		for(int i=0; i < openImage.width; i++) {
+			for(int j=0; j < openImage.height; j++) {
+				int column = 0;
+				int count = 0;
+				for(int x = -1; x < 2; x++) {
+					for(int y = -1; y < 2; y++) {
+						if((x + i) >= 0 && (x + i) < openImage.width && (y + j) >= 0 && (y + j) < openImage.height) {
+							column += openImage.pixelData[i + x][j + y];
+							count++;
+						}
+					}
+				}
+				newPixelData[i][j] = (int)((column*1.0)/count);
+			}
+		}
+		openImage.setPixelData(newPixelData);
+		update();
+	}
+	
+	public void doMedianBlur() {
+		int[][] newPixelData = new int[openImage.width][openImage.height];
+		for(int i=0; i < openImage.width; i++) {
+			for(int j=0; j < openImage.height; j++) {
+				int[] column = new int[9];
+				int count = 0;
+				for(int x = -1; x < 2; x++) {
+					for(int y = -1; y < 2; y++) {
+						if((x + i) >= 0 && (x + i) < openImage.width && (y + j) >= 0 && (y + j) < openImage.height) {
+							column[count] =  openImage.pixelData[i + x][j + y];
+							count++;
+						}
+					}
+				}
+				Arrays.sort(column);
+				if(count % 2 == 0) newPixelData[i][j] = (int)(.5 * (column[count/2] + column[count/2 - 1]));
+				else newPixelData[i][j] = (int)(column[count/2]);
+			}
+		}
+		openImage.setPixelData(newPixelData);
+		update();
+	}
+	
+	public int[][] convolve(int[][] mask, int division) {
+		int[][] newPixelData = new int[openImage.width][openImage.height];
+
+		for(int i=0; i < openImage.width; i++) {
+			for(int j=0; j < openImage.height; j++) {
+				int column = 0;
+				int count = 0;
+				for(int x = 0; x < 3; x++) {
+					for(int y = 0; y < 3; y++) {
+						if((x + i - 1) >= 0 && (x + i - 1) < openImage.width && (y + j - 1) >= 0 && (y + j - 1) < openImage.height) {
+							column += (mask[x][y] * openImage.pixelData[i + x - 1][j + y - 1]);
+							count++;
+						}
+					}
+				}
+				newPixelData[i][j] = (int)((column*1.0)/division);
+				
+				if(newPixelData[i][j] > 255) {
+					newPixelData[i][j] = 255;
+				} else if(newPixelData[i][j] < 0 ) {
+					newPixelData[i][j] = 0;
+				}
+			}
+		}
+		
+		return newPixelData;
+	}
+	
+	public void doEdgeDetection() {
+		
+		int[][] xMask = {
+				{-1, 0, 1},
+				{-2, 0, 2},
+				{-1, 0, 1},
+			}; 
+		
+		int[][] yMask = {
+				{-1, -2, -1},
+				{0, 0, 0},
+				{1, 2, 1},
+			}; 
+		
+		int[][] newXData = convolve(xMask, 8);
+		int[][] newYData = convolve(yMask, 8);
+		int[][] newPixelData = new int[openImage.width][openImage.height];
+		for(int i=0; i < openImage.width; i++) {
+			for(int j=0; j < openImage.height; j++) {
+				newPixelData[i][j] = (int) (Math.pow((double)(newXData[i][j]*newXData[i][j] + newYData[i][j] * newYData[i][j]),  .5));
+			}
+		}
+		openImage.setPixelData(newPixelData);
+		update();
+	}
+	
+	
+	public void doSharpen() {
+		int[][] mask = {
+				{0, -1, 0},
+				{-1, 6, -1},
+				{0, -1, 0 },
+			};
+		
+		int[][] newPixelData = convolve(mask, 2);
+		openImage.setPixelData(newPixelData);
 		update();
 	}
 }
