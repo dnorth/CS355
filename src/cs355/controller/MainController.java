@@ -6,6 +6,7 @@ import java.awt.event.MouseListener;
 import java.awt.event.MouseMotionListener;
 import java.awt.geom.Point2D;
 import java.awt.image.BufferedImage;
+import java.awt.image.WritableRaster;
 import java.util.Iterator;
 
 import cs355.GUIFunctions;
@@ -20,6 +21,7 @@ import cs355.controller.handler.SelectionHandler;
 import cs355.controller.handler.SquareHandler;
 import cs355.controller.handler.TriangleHandler;
 import cs355.model.Model;
+import cs355.model.currentImage;
 import cs355.view.MainView;
 
 public class MainController implements CS355Controller, MouseListener, MouseMotionListener{
@@ -163,14 +165,30 @@ public class MainController implements CS355Controller, MouseListener, MouseMoti
 
 	@Override
 	public void doLoadImage(BufferedImage openImage) {
-		model.setOpenImage(openImage);
+		
+		WritableRaster raster = openImage.getRaster();
+		int[][] pixels = new int[raster.getWidth()][raster.getHeight()];
+		
+		for(int i=0; i < raster.getWidth(); i++) {
+			for(int j=0; j < raster.getHeight(); j++) {
+				pixels[i][j] = raster.getSample(i, j, 0);
+			}
+		}
+		
+		currentImage newImage = new currentImage(
+				raster.getWidth(),
+				raster.getHeight(), 
+				pixels
+				);
+		
+		model.setOpenImage(newImage);
 		
 	}
 
 	@Override
 	public void toggleBackgroundDisplay() {
-		// TODO Auto-generated method stub
-		
+		view.setDisplayImage(!view.isDisplayImage());
+		GUIFunctions.refresh();
 	}
 
 	public Model getModel() {
@@ -206,6 +224,7 @@ public class MainController implements CS355Controller, MouseListener, MouseMoti
 	public void mousePressed(MouseEvent e) {
         Point2D p = new Point2D.Double();
         view.getViewToWorld().transform(e.getPoint(), p);
+        System.out.println(p);
 		drawingHandler.start(new Point((int) p.getX(), (int) p.getY()));
 	}
 

@@ -4,6 +4,7 @@ import java.awt.Color;
 import java.awt.geom.AffineTransform;
 import java.awt.geom.Point2D;
 import java.awt.image.BufferedImage;
+import java.awt.image.WritableRaster;
 import java.util.ArrayList;
 import java.util.Observable;
 
@@ -18,7 +19,7 @@ import cs355.model.shape.Triangle;
 public class Model extends Observable {
 	private Shape activeShape;
 	private ArrayList<Shape> shapes = new ArrayList<Shape>();
-	private BufferedImage openImage = null;
+	private currentImage openImage = null;
 	
 	public void addActiveShape() {
 		shapes.add(activeShape);
@@ -98,13 +99,13 @@ public class Model extends Observable {
 
 
 
-	public BufferedImage getOpenImage() {
+	public currentImage getOpenImage() {
 		return openImage;
 	}
 
 
 
-	public void setOpenImage(BufferedImage openImage) {
+	public void setOpenImage(currentImage openImage) {
 		this.openImage = openImage;
 		update();
 	}

@@ -6,9 +6,6 @@ import java.awt.geom.Point2D;
 import java.util.Observable;
 import java.util.Observer;
 
-import org.lwjgl.input.Keyboard;
-import org.lwjgl.util.vector.Vector3f;
-
 import cs355.GUIFunctions;
 import cs355.ViewRefresher;
 import cs355.model.Model;
@@ -26,26 +23,30 @@ public class MainView implements ViewRefresher, Observer{
 	private double scrollX;
 	private double scrollY;
 	private boolean draw3D; 
+	private boolean displayImage;
 	
 	public MainView(Model model) {
 		this.model = model;
 		this.zoom = .25;
-		this.canvasHeight = 2048;
-		this.canvasWidth = 2048;
+		this.canvasHeight = 512;
+		this.canvasWidth = 512;
 		this.scrollX = 0;
 		this.scrollY = 0;
 		this.draw3D = false;
+		this.displayImage = false;
 		this.worldToView = new CustomAffineTransform();
 		this.viewToWorld = new CustomAffineTransform();	
 		this.drawer = new Drawer(this);
 		this.model.addObserver(this);
+		this.updateViewToWorld();
+		this.updateWorldToView();
 	}
 
 	@Override
 	public void refreshView(Graphics2D g2d) {
 		drawer.setG2D(g2d);
 		
-		if(model.getOpenImage() != null) {
+		if(model.getOpenImage() != null && displayImage) {
 			drawer.displayActiveImage(model.getOpenImage());
 		}
 				
@@ -70,15 +71,18 @@ public class MainView implements ViewRefresher, Observer{
 	
 	public void zoomIn() {
 		if (zoom >= 4) return;
-		
-		Point2D center = new Point2D.Double(canvasWidth/2.0, canvasHeight/2.0);
-		viewToWorld.transform(center, center);
-		
 		zoom *= 2;
 		
 		updateScrollBars();
 		updateWorldToView();
 		updateViewToWorld();
+		
+		Point2D center = new Point2D.Double((canvasWidth)/2.0, (canvasHeight)/2.0);
+		System.out.println("Center: " + center);
+		viewToWorld.transform(center, center);
+		System.out.println("New Center: " + center);
+		
+
 		
         GUIFunctions.setHScrollBarPosit((int) center.getX());
         GUIFunctions.setVScrollBarPosit((int) center.getY());
@@ -87,16 +91,18 @@ public class MainView implements ViewRefresher, Observer{
 	}
 	
 	public void zoomOut() {	
-		if (zoom <= 0.25) return;
-		
-		Point2D center = new Point2D.Double(canvasWidth/2.0, canvasHeight/2.0);
-		viewToWorld.transform(center, center);
-		
+		if (zoom <= .25) return;
 		zoom /= 2;
 		
 		updateScrollBars();
 		updateWorldToView();
 		updateViewToWorld();
+		
+		Point2D center = new Point2D.Double((canvasWidth)/2.0, (canvasHeight)/2.0);
+		System.out.println("Center: " + center);
+		viewToWorld.transform(center, center);
+		System.out.println("New Center: " + center);
+
 		
         GUIFunctions.setHScrollBarPosit((int) center.getX());
         GUIFunctions.setVScrollBarPosit((int) center.getY());
@@ -108,6 +114,7 @@ public class MainView implements ViewRefresher, Observer{
 		this.scrollX = x_scroll;
 		updateWorldToView();
 		updateViewToWorld();
+		System.out.println("Scroll X: " + scrollX);
 		GUIFunctions.refresh();
 	}
 	
@@ -115,15 +122,26 @@ public class MainView implements ViewRefresher, Observer{
 		this.scrollY = y_scroll;
 		updateWorldToView();
 		updateViewToWorld();
+		System.out.println("Scroll Y: " + scrollY);
 		GUIFunctions.refresh();
 	}
 	
     public void updateScrollBars() {
-        GUIFunctions.setHScrollBarMax((int) (zoom*canvasWidth));
-        GUIFunctions.setHScrollBarKnob((int) canvasWidth);
-
-        GUIFunctions.setVScrollBarMax((int) (zoom*canvasHeight));
-        GUIFunctions.setVScrollBarKnob((int) canvasHeight);
+    	
+    	if(zoom == .25) {
+            GUIFunctions.setHScrollBarPosit(0);
+            GUIFunctions.setVScrollBarPosit(0);
+    	}
+    	
+    	System.out.println("Canvas Width Max: " + (int) (canvasWidth * 4));
+    	System.out.println("Canvas Height Max: " + (int) (canvasHeight * 4));
+    	System.out.println("Canvas Width Current: " + (int) (canvasWidth / zoom));
+    	System.out.println("Canvas Width Current: " + (int) (canvasWidth / zoom));
+    	System.out.println("Zoom: " + zoom);
+        GUIFunctions.setHScrollBarKnob((int) (canvasWidth / zoom));
+        GUIFunctions.setHScrollBarMax((int) (2048 * zoom));
+        GUIFunctions.setVScrollBarMax((int) (2048 * zoom));
+        GUIFunctions.setVScrollBarKnob((int) (canvasHeight / zoom));
     }
 	
 	public void updateWorldToView() {
@@ -262,6 +280,14 @@ public class MainView implements ViewRefresher, Observer{
 	public void setDraw3D(boolean draw3d) {
 		updateWorldToView();
 		draw3D = draw3d;
+	}
+
+	public boolean isDisplayImage() {
+		return displayImage;
+	}
+
+	public void setDisplayImage(boolean displayImage) {
+		this.displayImage = displayImage;
 	}
 
 }

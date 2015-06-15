@@ -31,7 +31,6 @@ public class CS355
     	MainView view = new MainView(model);
     	MainController controller = new MainController(model, view);
         GUIFunctions.createCS355Frame(controller,view,controller,controller);
-        
         GUIFunctions.refresh();        
     }
 }
